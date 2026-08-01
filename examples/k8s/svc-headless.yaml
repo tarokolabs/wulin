@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: svc-headless
+spec:
+  selector:
+    app: dep-sshd
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 22101
+  clusterIP: None

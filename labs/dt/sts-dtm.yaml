@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: dtm
+  namespace: dt
+spec:
+  selector:
+    matchLabels:
+      dt: master
+  serviceName: "svc-dt"
+  volumeClaimTemplates:
+  - metadata:
+      name: nn
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: local-path
+      resources:
+        requests:
+          storage: 60Gi
+  - metadata:
+      name: sn
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: local-path
+      resources:
+        requests:
+          storage: 60Gi
+  replicas: 2
+  template:
+    metadata:
+      labels:
+       dt: master
+       app: dt
+    spec:
+      securityContext:
+        fsGroup: 1000
+        runAsUser: 1000
+      nodeSelector:                         
+        dt: admin
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 10.98.16.10
+        searches:
+        - svc-dt.dt.svc.tklh.k8s
+        - dt.svc.tklh.k8s
+        - svc.tklh.k8s
+      volumes:
+        - name: dt-sys
+          hostPath:
+            path: /opt/zfs/sys
+      runtimeClassName: gvisor
+      containers:
+        - image: quay.io/cloudwalker/usdt.hdp35
+          imagePullPolicy: IfNotPresent
+          name: dtm
+          tty: true
+          volumeMounts:
+           - name: dt-sys
+             mountPath: /opt/zfs/sys
+           - name: nn
+             mountPath: /home/bigred/nn
+           - name: sn
+             mountPath: /home/bigred/sn

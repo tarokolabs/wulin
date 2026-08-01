@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-lkhnfs
+  labels:
+    app: lkhnfs
+  namespace: lkh
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lkhnfs
+  template:
+    metadata:
+      labels:
+        app: lkhnfs
+      name: lkhnfs
+      namespace: lkh
+    spec:
+     hostNetwork: true
+     dnsPolicy: None
+     dnsConfig:
+      nameservers:
+      - 10.98.64.10
+      searches:
+      - svc-lkh.lkh.svc.tklkh.k8s
+      - svc.tklkh.k8s
+      - lkh.svc.tklkh.k8s
+     hostname: lkhnfs
+     volumes:
+     - name: wulin
+       hostPath:
+        path: /opt/wulin/
+     - name: zfs-storage
+       hostPath:
+         path: /opt/zfs
+     imagePullSecrets:
+     - name: dkreg
+     containers:
+     - name: dtnfs
+       image: dkreg.taroko:5000/uslkh
+       imagePullPolicy: IfNotPresent
+       tty: true
+       command: ["/bin/bash", "-c"]
+       args:
+         - |
+           service rpcbind start
+           source /opt/zfs/sys/uslkh.bash
+           hdfs --daemon start nfs3
+           tail -f /dev/null
+       securityContext:
+         privileged: true
+       volumeMounts:
+       - name: zfs-storage
+         mountPath: /opt/zfs
+       - name: wulin
+         mountPath: /home/bigred/wulin
+     nodeSelector:
+       app: taroko

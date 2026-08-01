@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: dtw
+  namespace: dip
+spec:
+  selector:
+    matchLabels:
+      sts: dtw
+  serviceName: "svc-dip"
+  volumeClaimTemplates:                 
+  - metadata:
+      name: dn
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: local-path
+      resources:
+        requests:
+          storage: 200Gi
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        sts: dtw
+        app: dip
+    spec:
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 10.98.16.10
+        searches:
+        - svc-dip.dip.svc.tkdip.k8s
+        - dip.svc.tkdip.k8s
+        - svc.tkdip.k8s
+      volumes:
+        - name: dip-sys
+          hostPath:
+            path: /opt/zfs/sys
+      runtimeClassName: gvisor
+      containers:
+        - image: dkreg.taroko:5000/usdt.hdp341
+          imagePullPolicy: Always
+          name: dtw
+          tty: true
+          volumeMounts:
+           - name: dip-sys
+             mountPath: /opt/zfs/sys
+           - name: dn
+             mountPath: /home/bigred/dn

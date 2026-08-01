@@ -1,0 +1,76 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lkhair
+  namespace: lkh
+  labels:
+    app: lkhair
+spec:
+  clusterIP: None
+  selector:
+    app: lkhair
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-lkhair
+  labels:
+    app: lkhair
+  namespace: lkh
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lkhair
+  template:
+    metadata:
+      labels:
+        app: lkhair
+      name: lkhair
+      namespace:lkh
+    spec:
+     dnsPolicy: None
+     dnsConfig:
+      nameservers:
+      - 10.98.16.10
+      searches:
+      - svc-dip.lkh.svc.tklkh.k8s
+      - lkh.svc.tklkh.k8s
+      - svc.tklkh.k8s
+     hostname: lkhair
+     volumes:
+     - name: wulin
+       hostPath:
+        path: /opt/wulin/
+     - name: zfs-storage
+       hostPath:
+         path: /opt/zfs
+     imagePullSecrets:
+     - name: dkreg
+     containers:
+     - name: lkhair
+       image: dkreg.taroko:5000/us.airflow
+       imagePullPolicy: Always
+       tty: true
+       command: ["/bin/bash", "-c"]
+       args:
+         - |
+           source /opt/zfs/sys/usdt.bash
+           # mkdir -p /home/bigred/hdfs
+           # sudo mount -t nfs -o vers=3,proto=tcp,nolock,noacl,sync 172.22.8.3:/  /home/bigred/hdfs
+           jupyter lab --allow-root --ip=0.0.0.0 --no-browser \
+           --ServerApp.terminado_settings="shell_command=['/bin/bash']" \
+           --FileContentsManager.delete_to_trash=False 
+       securityContext:
+         privileged: true
+       volumeMounts:
+       - name: zfs-storage
+         mountPath: /opt/zfs
+       - name: wulin
+         mountPath: /home/bigred/wulin
+       ports:
+       - containerPort: 8090
+         protocol: TCP
+         hostPort: 8090
+     nodeSelector:
+       app: taroko

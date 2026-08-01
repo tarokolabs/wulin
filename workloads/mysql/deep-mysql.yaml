@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-fbs
+  labels:
+    app: dep-fbs
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dep-fbs
+  template:
+    metadata:
+      labels:
+        app: dep-fbs
+    spec:
+      containers:
+      - image: dkreg.kube-system:5000/alp.fbs:24.01
+        name: fbs
+        ports:
+        - containerPort: 4000
+        volumeMounts:
+        - name: fbs-storage
+          mountPath: /srv
+      volumes:
+      - name: fbs-storage
+        persistentVolumeClaim:
+          claimName: pvc-fbs

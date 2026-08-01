@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo "[套件設定]"
+cp ~/wulin/wk/lkh/conf/spark-3.5.5/* /opt/zfs/sys/spark-3.5.5-bin-hadoop3/conf/
+[ "$?" == "0" ] && echo "Spark 3.5.5 ok"
+cp ~/wulin/wk/lkh/conf/spark-3.4.4/* /opt/zfs/sys/spark-3.4.4-bin-hadoop3/conf/
+[ "$?" == "0" ] && echo "Spark 3.4.4 ok"
+cp ~/wulin/wk/lkh/conf/hadoop-3.4.1/* /opt/zfs/sys/hadoop-3.4.1/etc/hadoop/
+[ "$?" == "0" ] && echo "Hadoop 3.4.1 ok"
+cp ~/wulin/wk/lkh/conf/hive-4.0.1/* /opt/zfs/sys/apache-hive-4.0.1-bin/conf/
+[ "$?" == "0" ] && echo "Hive 4.0.1 ok"
+
+cp ~/wulin/wk/lkh/conf/uslkh.boot /opt/zfs/sys/
+[ "$?" == "0" ] && echo "uslkh.boot ok"
+cp ~/wulin/wk/lkh/conf/uslkh.bash /opt/zfs/sys/
+[ "$?" == "0" ] && echo "uslkh.bash ok"

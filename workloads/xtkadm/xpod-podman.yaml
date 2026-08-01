@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Pod
+metadata:
+  labels:
+    app: xpod
+  name: xpod
+spec:
+  hostname: xpod
+  #hostNetwork: true
+  containers:
+  - image: quay.io/flysangel/rdp:xfce4-v1.0.1
+    imagePullPolicy: Always
+    name: xpod
+    ports:
+      - containerPort: 3389
+        hostPort: 3388
+        protocol: TCP
+    resources:
+      limits:
+        cpu: "2"
+        memory: 4Gi
+      requests:
+        cpu: 500m
+        memory: 1Gi
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - mountPath: /dev/shm
+      name: dshm
+  restartPolicy: Always
+  volumes:
+  - emptyDir:
+      medium: Memory
+      sizeLimit: 2Gi
+    name: dshm

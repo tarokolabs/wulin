@@ -1,0 +1,9 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: svc-lkh
+  namespace: lkh
+spec:
+  selector:
+    app: lkh
+  clusterIP: None

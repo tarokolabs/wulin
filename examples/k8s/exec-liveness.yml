@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: liveness-exec
+spec:
+  containers:
+  - name: liveness
+    image: quay.io/cloudwalker/alp.base
+    command: [/bin/sh]
+    args:
+    - -c
+    # 以下命令代表 執行中的錯誤 是無法修正, 所以它會一直被 restart
+    - touch /tmp/healthy; sleep 20; rm -rf /tmp/healthy; sleep 120
+    livenessProbe:
+      exec:
+        command:
+        - cat
+        - /tmp/healthy
+      initialDelaySeconds: 5
+      periodSeconds: 5 

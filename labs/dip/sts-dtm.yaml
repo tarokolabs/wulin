@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: dtm
+  namespace: dip
+spec:
+  selector:
+    matchLabels:
+      sts: dtm
+  serviceName: "svc-dip"
+  volumeClaimTemplates:
+  - metadata:
+      name: nn
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: local-path
+      resources:
+        requests:
+          storage: 60Gi
+  - metadata:
+      name: sn
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: local-path
+      resources:
+        requests:
+          storage: 60Gi
+  - metadata:
+      name: zk
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: local-path
+      resources:
+        requests:
+          storage: 30Gi
+  replicas: 2
+  template:
+    metadata:
+      labels:
+       sts: dtm
+       app: dip
+    spec:
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 10.98.16.10
+        searches:
+        - svc-dip.dip.svc.tkdip.k8s
+        - dip.svc.tkdip.k8s
+        - svc.tkdip.k8s
+      volumes:
+        - name: dip-sys
+          hostPath:
+            path: /opt/zfs/sys
+      runtimeClassName: gvisor
+      containers:
+        - image: dkreg.taroko:5000/usdt.hdp341
+          imagePullPolicy: Always
+          name: dtm
+          tty: true
+          volumeMounts:
+           - name: dip-sys
+             mountPath: /opt/zfs/sys
+           - name: nn
+             mountPath: /home/bigred/nn
+           - name: sn
+             mountPath: /home/bigred/sn
+           - name: zk
+             mountPath: /home/bigred/zk

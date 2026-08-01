@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: default # Notice
+  name: mysql-secret
+type: Opaque
+stringData:
+  name: "data"
+  metaurl: "redis://redis.s3-system.svc.k1.org/5" # Notice
+  storage: "minio"
+  bucket: "http://miniosnsd.s3-system.svc.k1.org:9000/mysql" # Notice
+  access-key: "minio"
+  secret-key: "minio123"
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: sc-mysql
+provisioner: csi.juicefs.com
+reclaimPolicy: Retain
+volumeBindingMode: Immediate
+parameters:
+  csi.storage.k8s.io/node-publish-secret-name: mysql-secret
+  csi.storage.k8s.io/node-publish-secret-namespace: default # CSI Driver deploy on which namespace
+  csi.storage.k8s.io/provisioner-secret-name: mysql-secret
+  csi.storage.k8s.io/provisioner-secret-namespace: default # CSI Driver deploy on which namespace

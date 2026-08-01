@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: everything-allowed-pod
+  namespace: pss
+spec:
+#  hostNetwork: true
+#  hostPID: true
+  nodeName: tkha-worker1
+  containers:
+  - name: sleep
+    image: quay.io/cloudwalker/alpine
+    command: ["sh", "-c", "sleep infinity"]
+#    securityContext:
+#      privileged: true
+#    volumeMounts:
+#      - mountPath: "/host"
+#        name: noderoot
+#  volumes:
+#  - name: noderoot
+#    hostPath:
+#      path: /

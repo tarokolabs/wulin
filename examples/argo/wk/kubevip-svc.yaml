@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubevip-argo-server
+  namespace: argo
+  annotations:
+    kube-vip.io/loadbalancerIPs: "172.22.64.103"
+spec:
+  externalTrafficPolicy: Local
+  ports:
+  - name: argoweb
+    port: 2746
+    targetPort: 2746
+  selector:
+    app: argo-server
+  type: LoadBalancer
+  allocateLoadBalancerNodePorts: false

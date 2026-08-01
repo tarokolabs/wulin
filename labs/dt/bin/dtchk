@@ -1,0 +1,26 @@
+#!/bin/bash
+
+m="dtm-0 dtm-1"
+w="dtw-0 dtw-1 dtw-2"
+
+rm ~/.ssh/known_hosts &>/dev/null
+
+for n in $m $w
+do
+   nc -w 1 -z $n 22 &>/dev/null
+   if [ "$?" == "0" ]; then
+      echo "[$n]"
+      ssh $n 'echo JAVA_HOME: $JAVA_HOME' 2>/dev/null
+      ssh $n which python3 &>/dev/null
+      if [ "$?" == "0" ]; then
+         echo -n "python3 ok"
+      fi
+      echo ""; echo ""
+
+      echo "/etc/environment:"
+      ssh $n cat /etc/environment | head -n 5
+      echo ""
+      ssh $n hadoop checknative
+      echo ""      
+   fi
+done

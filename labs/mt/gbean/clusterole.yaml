@@ -1,0 +1,13 @@
+
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: psql   
+  name:  gclusterole
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["nodes", "persistentvolumes","secrets"]
+  verbs: ["create",  "delete", "deletecollection", "get", "list", "patch", "update", "watch"]
+- apiGroups: ["storage.k8s.io"]
+  resources: ["storageclasses", "volumeattachments", "csinodes", "csidrivers"]
+  verbs: ["*"] 

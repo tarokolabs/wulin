@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-img
+spec:
+  template:
+    metadata:
+      name: job-img
+    spec:
+      containers:
+      - name: job-img
+        image: quay.io/cloudwalker/alp.podman
+        command:
+          - sh
+          - "-c"
+          - |
+            for n in nginx busybox alp.fbs alp.base alp.sshd oracle.mysql alpine.derby
+            do
+               podman pull quay.io/cloudwalker/${n} &>/dev/null
+               [ "$?" == "0" ] && echo "quay.io/cloudwalker/$n pull ok"
+               podman tag quay.io/cloudwalker/${n} dkreg.taroko:5000/${n}
+               podman push  --creds bigred:bigred --tls-verify=false dkreg.taroko:5000/${n} &>/dev/null
+               [ "$?" == "0" ] && echo "quay.io/cloudwalker/$n push ok"
+               echo ""
+            done
+      restartPolicy: Never

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: pod-fbs
+  name: pod-fbs
+spec:
+  containers:
+  - name: myfbs
+    image: quay.io/cloudwalker/alp.fbs:24.1
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+    - name: fbs-storage
+      mountPath: /srv
+    ports:
+     - hostPort: 8080
+       containerPort: 4000
+  volumes:
+  - name: fbs-storage
+    persistentVolumeClaim:
+      claimName: pvc-fbs
+  nodeSelector:
+    kubernetes.io/hostname : c24-control-plane

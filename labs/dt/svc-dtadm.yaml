@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: dtadm
+  namespace: dt
+  annotations:
+    metallb.universe.tf/address-pool: mlb-pool
+spec:
+  type: LoadBalancer
+  allocateLoadBalancerNodePorts: false
+  ports:
+  - protocol: "TCP"
+    port: 22
+    targetPort: 22
+  selector:
+    statefulset.kubernetes.io/pod-name: dtm-0 

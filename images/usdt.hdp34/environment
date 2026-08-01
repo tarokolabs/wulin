@@ -1,0 +1,13 @@
+JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+HADOOP_CONF_DIR=/opt/zfs/sys/hadoop-3.4.3/etc/hadoop/
+HADOOP_HOME=/opt/zfs/sys/hadoop-3.4.3
+LD_LIBRARY_PATH=/opt/zfs/sys/hadoop-3.4.3/lib/native/
+HADOOP_COMMON_LIB_NATIVE_DIR=/opt/zfs/sys/hadoop-3.4.3/lib/native
+HADOOP_OPTS="-Djava.library.path=/opt/zfs/sys/hadoop-3.4.3/lib/native"
+HADOOP_MAPRED_LOG_DIR="/tmp/jhslog"
+YARN_HOME=/opt/zfs/sys/hadoop-3.4.3
+YARN_CONF_DIR=/opt/zfs/sys/hadoop-3.4.3/etc/hadoop/
+HADOOP_YARN_HOME=/opt/zfs/sys/hadoop-3.4.3
+YARN_LOG_DIR=/tmp
+PATH=/usr/lib/jvm/java-11-openjdk-amd64:/home/bigred/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/zfs/sys/hadoop-3.4.3/bin:/opt/zfs/sys/hadoop-3.4.3/sbin
+HADOOP_LOG_DIR=/tmp

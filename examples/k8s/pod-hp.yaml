@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-hp
+spec:
+  containers:
+  - name: pod-hp
+    image: quay.io/cloudwalker/alp.base
+    volumeMounts:
+    - name: hp-volume
+      mountPath: /var/lib/etc  # Path inside the container
+  volumes:
+  - name: hp-volume
+    hostPath:
+      path: /etc  # Path on the host node

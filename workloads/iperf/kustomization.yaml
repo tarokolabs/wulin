@@ -1,0 +1,12 @@
+namespace: iperf
+labels:
+ - includeSelectors: true
+   includeTemplates: true
+   pairs:
+     app: iperf3
+commonAnnotations:
+  oncallPager: 866-555-1212
+resources:
+- ns-iperf.yaml
+- svc-iperf.yaml
+- ds-iperf.yaml

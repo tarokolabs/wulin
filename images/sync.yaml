@@ -1,0 +1,8 @@
+docker.io:
+  images:
+    busybox:
+     - latest
+    alpine:
+      - latest
+    nginx:
+      - latest

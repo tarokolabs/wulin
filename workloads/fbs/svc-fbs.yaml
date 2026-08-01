@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: svc-fbs
+#  annotations:
+#    metallb.universe.tf/address-pool: mlb-pool
+spec:
+#  type: LoadBalancer
+  selector:
+    app: dep-fbs
+  ports:
+  - protocol: TCP
+    port: 4000
+    targetPort: 4000

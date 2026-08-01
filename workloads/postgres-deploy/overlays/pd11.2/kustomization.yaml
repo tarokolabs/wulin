@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# 繼承基礎配置
+resources:
+- ../../base
+
+# 套用微調補丁
+patches:
+- path: rolling-update-patch.yaml
+
+# 為生產環境打上統一標籤
+labels:
+ - pairs:
+    env: production
+    managed-by: kustomize

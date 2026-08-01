@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: mdb
+  annotations:
+    metallb.universe.tf/address-pool: mlb-pool
+spec:
+  allocateLoadBalancerNodePorts: false
+  type: LoadBalancer
+  selector:
+    app: mariadb
+  ports:
+  - name: mdb
+    protocol: TCP
+    port: 3306
+    targetPort: 3306

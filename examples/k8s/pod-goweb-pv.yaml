@@ -1,0 +1,22 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: goweb
+  labels:
+    app: goweb 
+spec:
+  containers:
+    - name: goweb
+      image: quay.io/cloudwalker/alp.goweb
+      imagePullPolicy: IfNotPresent
+      ports:
+        - containerPort: 8080
+          hostPort: 8080
+      volumeMounts:
+        - mountPath: "/opt/www/"
+          name: goweb-hp
+  volumes:
+    - name: goweb-hp
+      hostPath:
+        path: /opt/zfs/goweb
+  nodeName: tk8s-worker2

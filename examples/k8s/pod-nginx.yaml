@@ -1,0 +1,16 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: pod-nginx
+spec:
+  volumes:
+    - name: nginx-storage
+      persistentVolumeClaim:
+       claimName: nginx-storage
+  containers:
+    - name: pod-nginx
+      image: quay.io/cloudwalker/nginx
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: nginx-storage

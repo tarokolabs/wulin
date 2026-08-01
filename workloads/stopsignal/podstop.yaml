@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: podstop
+spec:
+  volumes:
+  - name: podstop
+    hostPath:
+     path: /opt/zfs/podstop
+  containers:
+    - name: signal 
+      image: quay.io/cloudwalker/alp.base
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+       - name: podstop
+         mountPath: /tmp
+      lifecycle:
+        preStop:
+          #sleep:
+          #    seconds: 30
+          exec:
+            command:
+            - sh
+            - "-c"
+            - |
+              echo 'prestop' > /tmp/d.out
+              date +%H-%M-%S >> /tmp/d.out
+              sleep 30
+              date +%H-%M-%S >> /tmp/d.out
+  terminationGracePeriodSeconds: 70

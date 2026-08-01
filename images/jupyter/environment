@@ -1,0 +1,6 @@
+JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+HADOOP_CONF_DIR=/opt/zfs/sys/hadoop-3.4.1/etc/hadoop/
+HADOOP_HOME=/opt/zfs/sys/hadoop-3.4.1
+HIVE_HOME=/opt/zfs/sys/apache-hive-4.0.1-bin
+PATH=/usr/lib/jvm/java-11-openjdk-amd64:/home/bigred/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/zfs/sys/hadoop-3.4.1/etc/hadoop/bin:/opt/zfs/sys/hadoop-3.4.1/etc/hadoop/sbin:/opt/zfs/sys/apache-hive-4.0.1-bin/bin
+HADOOP_LOG_DIR=/tmp

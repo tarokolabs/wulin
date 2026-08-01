@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alertmanager-config
+  namespace: monitoring
+data:
+  alertmanager.yml: |-
+    global:
+      resolve_timeout: 5m
+    route:
+      # 根據告警名稱與嚴重程度分組
+      group_by: ['alertname', 'severity']
+      # 收到告警後等待 10 秒，將相關告警打包後再發送
+      group_wait: 10s
+      group_interval: 10s
+      repeat_interval: 1h
+      # 預設接收器
+      receiver: 'custom-webhook'
+    
+    receivers:
+      - name: 'custom-webhook'
+        webhook_configs:
+          # 指向 Phase 1 建立的 Webhook Service
+          - url: 'http://bash-webhook-svc.monitoring.svc.tkha.k8s:8080/alerts'
+            # 當告警恢復時，也發送一份通知
+            send_resolved: true

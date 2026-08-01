@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: svc-goweb
+spec:
+  type: NodePort
+  externalTrafficPolicy: Local
+  internalTrafficPolicy: Local
+  selector:
+    app: dep-goweb
+  ports:
+  - protocol: TCP
+    nodePort: 30080
+    port: 8080
+    targetPort: 8080

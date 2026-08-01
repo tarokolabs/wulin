@@ -1,0 +1,88 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dtadm
+  namespace: dt
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: dtadm
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: dtadm
+  namespace: dt
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dtadm
+  namespace: dt
+#  annotations:
+#    tkport: "tkgw:22101:22101"
+spec:
+  selector:
+    app: dtadm
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dtadm
+  labels:
+    app: dtadm
+  namespace: dt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dtadm
+  template:
+    metadata:
+      labels:
+        app: dtadm
+      name: dtadm
+      namespace: dt
+    spec:
+     dnsPolicy: None
+     dnsConfig:
+      nameservers:
+      - 10.98.16.10
+      searches:
+      - svc-dt.dt.svc.tklh.k8s
+      - dt.svc.tklh.k8s
+      - svc.tklh.k8s
+     hostname: dtadm
+     volumes:
+     - name: wulin
+       hostPath:
+        path: /opt/wulin/
+     - name: zfs-storage
+       hostPath:
+         path: /opt/zfs
+     serviceAccountName: dtadm
+     imagePullSecrets:
+     - name: dkreg
+#     runtimeClassName: gvisor
+     containers:
+     - name: dtadm
+       image: quay.io/cloudwalker/usdt.hdp35
+       imagePullPolicy: IfNotPresent
+       tty: true
+       securityContext:
+         privileged: true
+       volumeMounts:
+       - name: zfs-storage
+         mountPath: /opt/zfs
+       - name: wulin
+         mountPath: /home/bigred/wulin
+       ports:
+       - containerPort: 22
+         protocol: TCP
+         hostPort: 22101
+     nodeSelector:
+       dt: admin

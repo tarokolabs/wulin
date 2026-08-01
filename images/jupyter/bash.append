@@ -1,0 +1,13 @@
+if [ -z "$SSH_TTY" ]; then
+   export LANG=en_US.UTF-8
+   export LANGUAGE=en_US
+   export LC_ALL=en_US.UTF-8
+else
+   export LC_ALL=zh_TW.UTF-8
+fi
+if [ "$USER" == "" ]; then
+   if [ -f /jupyter/bin/start.sh ]; then
+      /jupyter/bin/start.sh &>/tmp/start.out
+   fi
+   # sudo /etc/init.d/ssh start &>/dev/null
+fi

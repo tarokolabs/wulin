@@ -1,0 +1,14 @@
+namespace: psql
+labels:
+- includeSelectors: true
+  includeTemplates: true
+  pairs:
+    app: pg
+resources:
+- namespace.yaml
+- secret-postgres.yaml 
+- cm-postgres.yaml
+- dep-pvc.yaml
+- deployment.yaml
+- service.yaml
+

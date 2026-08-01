@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-iperf-np
+  namespace: iperf
+spec:
+  selector:
+    app: iperf3
+  externalTrafficPolicy: Local
+  internalTrafficPolicy: Local
+  ports:
+  - name: iperf
+    port: 12345
+    protocol: TCP
+    targetPort: 12345
+    nodePort: 30100
+  type: NodePort

@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:  
+  name: cronjob-iperf
+spec:
+  successfulJobsHistoryLimit: 2                                       # add
+  failedJobsHistoryLimit: 3                                           # add
+  schedule: "*/3 * * * *"
+  jobTemplate:
+    metadata:
+      name: cronjob-iperf
+    spec:
+      template:
+        metadata:
+        spec:
+          containers:
+          - image: quay.io/cloudwalker/alp.base
+            imagePullPolicy: IfNotPresent
+            name: iperf                                 
+            command:
+            - sh
+            - "-c"
+            - |
+              d=$(dig svc-iperf.iperf.svc.tkbp.k8s. +short)
+              [ "$d" == "" ] && echo "svc-iperf.iperf not found" && exit 1
+              mkdir -p /var/lib/iperf
+              fn="$(date +%H-%M)-cronjob-iperf.log"
+              for n in $d
+              do
+                echo "[$n]" >> /var/lib/iperf/${fn}
+                iperf3 -c "$n" -p 12345 | head -n 5 >> /var/lib/iperf/${fn}
+                echo "" >> /var/lib/iperf/${fn}
+              done
+            volumeMounts:
+             - mountPath: "/var/lib"
+               name: iperf
+          volumes:
+          - name: iperf
+            hostPath:
+             path: /opt/zfs/
+          restartPolicy: Never                                         # change

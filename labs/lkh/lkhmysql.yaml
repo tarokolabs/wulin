@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dipdb
+  namespace: dip
+  labels:
+    app: dipdb
+spec:
+  ports:
+  - port: 3306
+    protocol: TCP
+    targetPort: 3306
+  selector:
+    app: dipdb
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-dipdb
+  labels:
+    app: dipdb
+  namespace: dip
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dipdb
+  template:
+    metadata:
+      labels:
+        app: dipdb
+      name: dipdb
+      namespace: dip
+    spec:
+     dnsPolicy: None
+     dnsConfig:
+      nameservers:
+      - 10.98.16.10
+      searches:
+      - svc-dip.dip.svc.tkdip.k8s
+      - dip.svc.tkdip.k8s
+      - svc.tkdip.k8s
+     hostname: dipdb
+     volumes:
+     - name: db
+       hostPath:
+        path: /opt/zfs/db
+     - name: zfs-storage
+       hostPath:
+         path: /opt/zfs
+     imagePullSecrets:
+     - name: dkreg
+     containers:
+     - name: dipdb
+       image: dkreg.taroko:5000/oracle.mysql
+       imagePullPolicy: Always
+       tty: true
+       securityContext:
+         privileged: true
+       volumeMounts:
+       - name: zfs-storage
+         mountPath: /opt/zfs
+       - name: db
+         mountPath: /var/lib/mysql
+       ports:
+       - containerPort: 3306
+#     nodeSelector:
+#       app: taroko

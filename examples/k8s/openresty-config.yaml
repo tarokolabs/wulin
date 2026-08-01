@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openresty-config
+  labels:
+    app: restful-derby
+data:
+  default.conf: |
+    # 定義快取路徑、層級、共享記憶體大小 (10m) 與快取最大容量 (1g)
+    proxy_cache_path /tmp/nginx_cache levels=1:2 keys_zone=my_api_cache:10m max_size=1g inactive=60m use_temp_path=off;
+
+    server {
+        listen 80;
+        server_name localhost;
+
+        # 針對所有進入的 RESTful 請求進行處理
+        location / {
+            # 啟用快取並指定區域
+            proxy_cache my_api_cache;
+            
+            # 針對 HTTP 200 狀態碼快取 10 分鐘，404 快取 1 分鐘
+            proxy_cache_valid 200 10m;
+            proxy_cache_valid 404 1m;
+            
+            # 允許客戶端透過 Cache-Control 繞過快取（供測試除錯使用）
+            proxy_cache_bypass $http_cache_control;
+            
+            # 在回應的 Header 中加入快取狀態 (HIT / MISS / BYPASS)
+            add_header X-Proxy-Cache $upstream_cache_status;
+
+            # 轉發請求至同一個 Pod 內部的 Spring Boot Container
+            proxy_pass http://127.0.0.1:8888;
+            
+            # 傳遞標準 HTTP 標頭
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    }

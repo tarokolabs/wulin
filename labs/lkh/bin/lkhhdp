@@ -1,0 +1,46 @@
+#!/bin/bash
+
+curl -X GET -s -u bigred:bigred http://dkreg.taroko:5000/v2/_catalog | jq ".repositories[]" | grep 'uslkh' &>/dev/null
+if [ "$?" != "0" ]; then
+   sudo podman build --format=docker --no-cache --force-rm  --squash -t uslkh ~/wulin/images/uslkh/ &>/dev/null
+   if [ "$?" == "0" ]; then
+      sudo podman tag uslkh dkreg.taroko:5000/uslkh
+      sudo podman push --creds bigred:bigred --tls-verify=false dkreg.taroko:5000/uslkh &>/dev/null
+      [ "$?" == "0" ] && echo "uslkh image ok"
+   fi 
+fi
+
+curl -X GET -s -u bigred:bigred http://dkreg.taroko:5000/v2/_catalog | jq ".repositories[]" | grep 'oracle.mysql8.0' &>/dev/null
+if [ "$?" != "0" ]; then
+   sudo podman build --format=docker --no-cache --force-rm --squash-all -t oracle.mysql8.0 ~/wulin/images/mysql8.0 &>/dev/null
+   if [ "$?" == "0" ]; then
+      sudo podman tag oracle.mysql8.0 dkreg.taroko:5000/oracle.mysql8.0
+      sudo podman push --creds bigred:bigred --tls-verify=false dkreg.taroko:5000/oracle.mysql8.0 &>/dev/null
+      [ "$?" == "0" ] && echo "oracle.mysql8.0 image ok"
+   fi 
+fi
+
+kubectl get ns lkh &>/dev/null
+if [ "$?" != "0" ];then
+   kubectl create ns lkh &>/dev/null
+   kubectl get secret dkreg --namespace default --output yaml | sed "s/namespace: default/namespace: lkh/" | kubectl apply --namespace lkh --filename - &>/dev/null
+   kubectl patch serviceaccount default -n lkh -p '{"imagePullSecrets": [{"name": "dkreg"}]}' &>/dev/null
+   echo "lkh namespace ok"
+
+   kubectl apply -f ~/wulin/wk/lkh/lkhadm.yaml &>/dev/null
+   sleep 10; kubectl wait -n lkh pod -l dep=lkhadm --for=condition=Ready --timeout=60s
+
+   kubectl apply -f  ~/wulin/wk/lkh/svc-lkh.yaml &>/dev/null
+   kubectl apply -f ~/wulin/yaml/rc-gvisor.yaml &>/dev/null
+
+   kubectl apply -f ~/wulin/wk/lkh/sts-dtm.yaml &>/dev/null
+   sleep 60; kubectl wait -n lkh pod -l sts=dtm --for=condition=Ready --timeout=60s
+   kubectl apply -f ~/wulin/wk/lkh/sts-dtw.yaml &>/dev/null
+   sleep 90; kubectl wait -n lkh pod -l sts=dtw --for=condition=Ready --timeout=60s
+   echo ""
+else
+   echo "Lakehouse Images"
+   curl -X GET -s -u bigred:bigred http://dkreg.taroko:5000/v2/_catalog | jq ".repositories[]"
+   echo""
+   kubectl get pods -n lkh
+fi

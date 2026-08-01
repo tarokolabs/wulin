@@ -1,0 +1,28 @@
+# Save the output of this file and use kubectl create -f to import
+# it into Kubernetes.
+#
+# Created with podman-4.9.3
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2025-09-29T10:51:14Z"
+  labels:
+    app: bind
+  name: bind
+spec:
+  containers:
+  - env:
+    - name: TERM
+      value: xterm
+    image: localhost/alp.bind:latest
+    name: pbind
+    stdin: true
+    tty: true
+    volumeMounts:
+    - mountPath: /etc/bind/zone
+      name: opt-zfs-pod-bind-zone-host-0
+  volumes:
+  - hostPath:
+      path: /opt/zfs/pod/bind/zone
+      type: Directory
+    name: opt-zfs-pod-bind-zone-host-0

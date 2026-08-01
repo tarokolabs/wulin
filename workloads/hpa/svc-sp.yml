@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-sp
+  labels:
+    app: svc-sp
+spec:
+  externalIPs:
+    - 120.96.143.243
+  selector:
+    app: pod-sp
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+

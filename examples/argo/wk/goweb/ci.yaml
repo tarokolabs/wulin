@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: podman-login-
+spec:
+  podGC:
+    strategy: OnPodSuccess
+  dnsPolicy: "None"
+  dnsConfig:
+    nameservers:
+     - "10.98.64.10"
+    searches:
+     - svc.tkha.k8s
+     - taroko.svc.tkha.k8s 
+  entrypoint: main
+
+  templates:
+    - name: main
+      inputs:
+        artifacts:
+          - name: goweb
+            path: /goweb
+            git:
+              repo: ssh://bigred@tkadm.taroko:22100/home/bigred/wulin/argo/wk/goweb
+              # insecureIgnoreHostKey disables SSH strict host key checking during the git clone
+              insecureIgnoreHostKey: true
+              # kubectl create secret generic git-cred --from-file=privateKey=/home/bigred/.ssh/id_rsa -n argo
+              sshPrivateKeySecret:
+                name: git-cred
+                key: privateKey
+      container:
+        image: dkreg.taroko:5000/alp.podman:1.0.0-cicd
+        securityContext:
+          privileged: true
+        workingDir: /goweb
+        command: [sh, -c]
+        args: ["task login"]

@@ -1,0 +1,86 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dtjupy
+  namespace: dt
+  labels:
+    app: dtjupy
+spec:
+  ports:
+   - name: dtjupy
+     port: 8888
+     protocol: TCP
+     targetPort: 8888
+  ports:
+   - name: openssh
+     port: 22103
+     protocol: TCP
+     targetPort: 22
+  selector:
+    app: dtjupy
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-dtjupy
+  labels:
+    app: dtjupy
+  namespace: dt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dtjupy
+  template:
+    metadata:
+      labels:
+        app: dtjupy
+      name: dtjupy
+      namespace: dt
+    spec:
+     dnsPolicy: None
+     dnsConfig:
+      nameservers:
+      - 10.98.8.10
+      searches:
+      - svc-dt.dt.svc.tkdt.k8s
+      - svc.tkdt.k8s
+      - dt.svc.tkdt.k8s
+     hostname: dtjupy
+     volumes:
+     - name: wulin
+       hostPath:
+        path: /opt/wulin/
+     - name: zfs-storage
+       hostPath:
+         path: /opt/zfs
+     imagePullSecrets:
+     - name: dkreg
+     containers:
+     - name: dtjupy
+       image: dkreg.taroko:5000/us.jupyter
+       imagePullPolicy: Always
+       tty: true
+       command: ["/bin/bash", "-c"]
+       args:
+         - |
+           source /opt/zfs/sys/usdt.bash
+           hbase-daemon.sh start thrift
+           mkdir -p /home/bigred/hdfs
+           sudo mount -t nfs -o vers=3,proto=tcp,nolock,noacl,sync 172.22.8.3:/  /home/bigred/hdfs
+           jupyter lab --allow-root --ip=0.0.0.0 --no-browser \
+           --ServerApp.terminado_settings="shell_command=['/bin/bash']" \
+           --FileContentsManager.delete_to_trash=False 
+       securityContext:
+         privileged: true
+       volumeMounts:
+       - name: zfs-storage
+         mountPath: /opt/zfs
+       - name: wulin
+         mountPath: /home/bigred/wulin
+       ports:
+       - containerPort: 8888
+         protocol: TCP
+         hostPort: 8888
+     nodeSelector:
+       app: taroko

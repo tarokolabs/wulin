@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mt 
+  labels:
+    app: mt
+  namespace: taroko
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mt
+  template:
+    metadata:
+      labels:
+        app: mt
+      name: mt
+    spec:
+#     dnsPolicy: None
+#     dnsConfig:
+#      nameservers:
+#      - 10.98.0.10
+#      searches:
+#      - svc.k1.k8s
+#      - taroko.svc.k1.k8s
+#      - svc-lkh.lkh.svc.k1.k8s
+#      - svc-dt.dt.svc.k1.k8s
+#      - svc-dip.dip.svc.k1.k8s
+#      options:
+#      - name: ndots
+#        value: "5"
+     volumes:
+     - name: mt-storage
+       hostPath:
+         path: /opt/zfs/
+     - name: podman-storage
+       hostPath:
+         path: /opt/zfs/podman
+     - name: wulin-storage
+       hostPath:
+         path: /opt/wulin
+     - name: mt-init
+       configMap:
+         name: mt-init
+         defaultMode: 0755 # Ensure the script is executable
+     hostname: mt
+     containers:
+     - name: mt
+       image: quay.io/cloudwalker/alp.tkadm
+#       imagePullPolicy: Always
+       imagePullPolicy: IfNotPresent
+       tty: true
+       ports:
+       - containerPort: 22100
+       lifecycle:
+         postStart:
+           exec:
+             command:
+             - /bin/bash
+             - -c
+             - |
+               n=$(echo $HOST_IP | cut -d'.' -f3,4)
+               hip=$(echo $n | tr '.' '_')
+               hostname "mt_${hip}"
+               cp /opt/zfs/config /home/bigred/.kube/config
+               chown -R bigred:wheel /home/bigred/.kube
+               chmod 700 -R /home/bigred/.kube
+       securityContext:
+         privileged: true
+       volumeMounts:
+       - name: mt-storage
+         mountPath: /opt/zfs
+       - name: podman-storage
+         mountPath: /var/lib/containers/storage
+       - name: wulin-storage
+         mountPath: /home/bigred/wulin
+       - name: mt-init
+         mountPath: /usr/bin/ash.init
+         subPath: ash.init
+       env:
+       - name: KUBERNETES_SERVICE_HOST
+         value: "kubernetes.default"
+       - name: KUBERNETES_SERVICE_PORT_HTTPS
+         value: "443"
+       - name: KUBERNETES_SERVICE_PORT
+         value: "443"
+       - name: HOST_IP
+         valueFrom:
+           fieldRef:
+             fieldPath: status.hostIP

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: dtw
+  namespace: dt
+spec:
+  selector:
+    matchLabels:
+      dt: worker
+  serviceName: "svc-dt"
+  volumeClaimTemplates:                 
+  - metadata:
+      name: dn
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: local-path
+      resources:
+        requests:
+          storage: 200Gi
+  replicas: 2
+  template:
+    metadata:
+      labels:
+       dt: worker
+       app: dt
+    spec:
+      securityContext:
+        fsGroup: 1000
+        runAsUser: 1000 
+      nodeSelector:                         
+        dt: worker
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 10.98.16.10
+        searches:
+        - svc-dt.dt.svc.tklh.k8s
+        - dt.svc.tklh.k8s
+        - svc.tklh.k8s
+      volumes:
+        - name: dt-sys
+          hostPath:
+            path: /opt/zfs/sys
+      runtimeClassName: gvisor
+      containers:
+        - image: quay.io/cloudwalker/usdt.hdp35
+          imagePullPolicy: IfNotPresent
+          name: dtw
+          tty: true
+          volumeMounts:
+           - name: dt-sys
+             mountPath: /opt/zfs/sys
+           - name: dn
+             mountPath: /home/bigred/dn

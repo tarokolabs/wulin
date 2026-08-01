@@ -1,0 +1,89 @@
+# https://github.com/kubernetes/examples/tree/master/staging/storage/minio
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  namespace: s3
+  name: minio
+  labels:
+    app: minio
+spec:
+  selector:
+    matchLabels:
+      app: minio 
+  serviceName: minio
+  replicas: 2 
+  template:
+    metadata:
+      labels:
+        app: minio 
+    spec:
+      dnsPolicy: None
+      dnsConfig:
+       nameservers:
+       - 10.98.16.10
+       searches:
+       - minio.s3.svc.tkdip.k8s
+       - s3.svc.tkdip.k8s
+       - svc.tkdip.k8s
+      containers:
+        - name: minio
+          image: minio/minio
+          imagePullPolicy: IfNotPresent    # Always, Nerver, IfNotPresent
+          resources:
+            requests:
+              cpu: "0.5"
+              memory: "256Mi"
+            limits:
+              cpu: "2"
+              memory: "2048Mi"
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              minio server http://minio-{0...1}.minio.s3.svc.tkdip.k8s/data{0...1} --console-address ":9001"
+          #args:
+            # Change this according to No. of replicas, namespace and volumes
+          #  - server
+          #  - http://minio-{0...1}.minio.s3.svc.tkdip.k8s/data{0...1} --console-address ":9001"
+          env:
+            - name: MINIO_ACCESS_KEY
+              value: "minio"
+            - name: MINIO_SECRET_KEY
+              value: "minio123"
+          livenessProbe:
+            httpGet:
+              path: /minio/health/live
+              port: 9000
+              scheme: HTTP
+            initialDelaySeconds: 120
+            periodSeconds: 30
+            timeoutSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          ports:
+            - containerPort: 9000
+            - containerPort: 9001
+              hostPort: 9001
+          volumeMounts:
+            - name: minio-data0
+              mountPath: /data0
+            - name: minio-data1
+              mountPath: /data1
+  volumeClaimTemplates:
+    - metadata:
+        name: minio-data0
+      spec:
+        storageClassName: local-path
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+    - metadata:
+        name: minio-data1
+      spec:
+        storageClassName: local-path
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi

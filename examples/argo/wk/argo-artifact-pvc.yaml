@@ -1,0 +1,13 @@
+# argo-artifact-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: argo-artifact-pvc
+  namespace: argo
+spec:
+  accessModes:
+    - ReadWriteMany 
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 20Gi

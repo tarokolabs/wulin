@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-dtnfs
+  labels:
+    app: dtnfs
+  namespace: dt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dtnfs
+  template:
+    metadata:
+      labels:
+        app: dtnfs
+      name: dtnfs
+      namespace: dt
+    spec:
+     hostNetwork: true
+     dnsPolicy: None
+     dnsConfig:
+      nameservers:
+      - 10.98.0.10
+      searches:
+      - svc-dt.dt.svc.tk8s.k8s
+      - svc.tk8s.k8s
+      - dt.svc.tk8s.k8s
+     hostname: dtnfs
+     volumes:
+     - name: wulin
+       hostPath:
+        path: /opt/wulin/
+     - name: zfs-storage
+       hostPath:
+         path: /opt/zfs
+     imagePullSecrets:
+     - name: dkreg
+     containers:
+     - name: dtnfs
+       image: dkreg.taroko:5000/usdt.hdp341
+       imagePullPolicy: IfNotPresent
+       tty: true
+       command: ["/bin/bash", "-c"]
+       args:
+         - |
+           service rpcbind start
+           source /opt/zfs/sys/usdt.bash
+           hdfs --daemon start nfs3
+           tail -f /dev/null
+       securityContext:
+         privileged: true
+       volumeMounts:
+       - name: zfs-storage
+         mountPath: /opt/zfs
+       - name: wulin
+         mountPath: /home/bigred/wulin
+     nodeSelector:
+       app: taroko

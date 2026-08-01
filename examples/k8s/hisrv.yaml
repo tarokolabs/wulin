@@ -1,0 +1,24 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: hi-app
+  namespace: ing-internal
+  labels:
+    app: hi-app
+spec:
+  containers:
+  - name: hi-app
+    image: hashicorp/http-echo
+    args:
+      - "-text=hi"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: hi-service
+  namespace: ing-internal
+spec:
+  selector:
+    app: hi-app
+  ports:
+    - port: 5678

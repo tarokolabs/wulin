@@ -1,0 +1,9 @@
+namespace: "prom"
+
+resources:
+- ./prom-main-cm.yaml
+- ./prom-rules-cm.yaml
+- ./prom-scrapes-cm.yaml
+- ./clusterRole.yaml
+- ./dep-prometheus.yaml
+- ./svc-prometheus.yaml 

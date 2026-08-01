@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-podtrap
+  labels:
+    app: podtrap
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: podtrap
+  template:
+    metadata:
+      labels:
+        app: podtrap
+      name: podtrap
+    spec:
+     hostname: podtrap
+     volumes:
+     - name: wulin
+       hostPath:
+        path: /opt/wulin/
+     imagePullSecrets:
+     - name: dkreg
+     containers:
+     - name: podtrap
+       image: quay.io/cloudwalker/alp.base
+       imagePullPolicy: IfNotPresent
+       tty: true
+       command: ["/home/bigred/wulin/wk/pod/trap.sh"]
+#       command: ["/bin/bash"]
+       securityContext:
+         privileged: true
+       volumeMounts:
+       - name: wulin
+         mountPath: /home/bigred/wulin

@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: mywk-
+spec:
+  dnsPolicy: "None"
+  dnsConfig:
+    nameservers:
+     - "10.98.64.10"
+    searches:
+     - svc.tkha.k8s
+     - taroko.svc.tkha.k8s    
+  entrypoint: p1
+  templates:
+    - name: p1
+      container:
+        image: dkreg.taroko:5000/alp.base:1.0.0-cicd
+        command:
+          - /bin/sh
+          - -c
+          - |
+            whoami
+            pwd
+            ls -al
+            cat /etc/os-release
+            hostname
+            hostname -i
+
+    - name: p2
+      container:
+        image: dkreg.taroko:5000/alp.base:1.0.0-cicd
+        command:
+          - /bin/sh
+          - -c
+          - |
+            echo "Hello! I am p2."

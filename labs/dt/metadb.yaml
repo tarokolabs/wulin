@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: metadb
+  namespace: dt
+  labels:
+    app: metadb
+spec:
+  ports:
+  - port: 3306
+    protocol: TCP
+    targetPort: 3306
+  selector:
+    app: metadb
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-metadb
+  labels:
+    app: metadb
+  namespace: dt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metadb
+  template:
+    metadata:
+      labels:
+        app: metadb
+      name: metadb
+      namespace: dt
+    spec:
+     dnsPolicy: None
+     dnsConfig:
+      nameservers:
+      - 10.98.16.10
+      searches:
+      - svc-dt.dt.svc.tkdt.k8s
+      - svc.tkdt.k8s
+      - dt.svc.tkdt.k8s
+     hostname: metadb
+     volumes:
+     - name: db
+       hostPath:
+        path: /opt/zfs/db
+     - name: zfs-storage
+       hostPath:
+         path: /opt/zfs
+     imagePullSecrets:
+     - name: dkreg
+     containers:
+     - name: metadb
+       image: dkreg.taroko:5000/oracle.mysql
+       imagePullPolicy: Always
+       tty: true
+       securityContext:
+         privileged: true
+       volumeMounts:
+       - name: zfs-storage
+         mountPath: /opt/zfs
+       - name: db
+         mountPath: /var/lib/mysql
+       ports:
+       - containerPort: 3306
+#     nodeSelector:
+#       app: taroko

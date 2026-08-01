@@ -1,0 +1,10 @@
+#!/bin/bash
+
+w="dtw-0 dtw-1 dtw-2"
+
+for n in $w
+do
+  scp wulin/wk/dt/bin/maxjps.sh "$n":/tmp/maxjps.sh &>/dev/null
+  [ "$?" != "0" ] && echo "copy wulin/wk/dt/bin/maxjps.sh failure" && exit 1
+  ssh $n 'nohup /tmp/maxjps.sh &>/dev/null &'
+done

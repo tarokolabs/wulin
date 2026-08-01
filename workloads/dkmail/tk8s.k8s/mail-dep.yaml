@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mail-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mailserver
+  template:
+    metadata:
+      labels:
+        app: mailserver
+    spec:
+      hostNetwork: true
+      dnsPolicy: None
+      dnsConfig:
+       nameservers:
+       - 172.22.0.254
+      volumes:
+        - name: mail-data
+          hostPath:
+            path: /opt/zfs/dkmail
+        - name: mail-config
+          configMap:
+            name: mail-config
+      containers:
+        - name: mailserver
+          image: docker.io/mailserver/docker-mailserver:latest
+          lifecycle:
+            postStart:
+              exec:
+               command:
+               - /bin/sh
+               - -c
+               - |
+                 #apt-get update;
+                 #apt-get install -y net-tools curl wget;
+                 setup email add bigred@tkdp.k8s bigred;
+                 setup email add rbean@tkdp.k8s rbean;
+                 setup email add gbean@tkdp.k8s gbean;
+          env:
+            - name: OVERRIDE_HOSTNAME
+              value: "mx1.tk8s.k8s"
+            - name: DMS_DEBUG
+              value: "1"
+            - name: POSTMASTER_ADDRESS
+              value: "bigred@tk8s.k8s"
+            - name: ENABLE_AMAVIS
+              value: "0"
+            - name: ENABLE_POP3
+              value: "1"
+            - name: HOST_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+          volumeMounts:
+            - name: mail-data
+              mountPath: /var/mail
+            - name: mail-config
+              mountPath: /tmp/docker-mailserver/postfix-main.cf
+              subPath: postfix-main.cf  # This specifies the file within the ConfigMap to mount
+          ports:
+            - containerPort: 25
+            - containerPort: 110
+            - containerPort: 143
+            - containerPort: 993

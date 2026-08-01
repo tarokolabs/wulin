@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-goweb
+  namespace: webapp
+data:
+  goweb.conf: |
+    export DBUSER=bigred
+    export DBPASS=bigred
+

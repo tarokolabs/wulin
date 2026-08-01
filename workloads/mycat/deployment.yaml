@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-mycat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mycat
+  template:
+    metadata:
+      labels:
+        app: mycat
+    spec:
+      containers:
+        - name: mycat
+          image: tomcat:9.0.104-jre8-temurin-jammy
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              memory: 200Mi
+              cpu: 300m
+            requests:
+              memory: 100Mi
+              cpu: 100m
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - |
+                   cp -R  /usr/local/tomcat/webapps.dist/* /usr/local/tomcat/webapps/

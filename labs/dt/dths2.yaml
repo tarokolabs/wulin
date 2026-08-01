@@ -1,0 +1,91 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dths2
+  namespace: dt
+  labels:
+    app: dths2
+  annotations:
+    tkport: "tkgw:10000:10000"
+spec:
+  ports:
+   - name: hs2
+     port: 10000
+     protocol: TCP
+     targetPort: 10000
+   - name: openssh
+     port: 22
+     protocol: TCP
+     targetPort: 22
+  selector:
+    app: dths2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-dths2
+  labels:
+    app: dths2
+  namespace: dt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dths2
+  template:
+    metadata:
+      labels:
+        app: dths2
+      name: dths2
+      namespace: dt
+    spec:
+     dnsPolicy: None
+     dnsConfig:
+      nameservers:
+      - 10.98.16.10
+      searches:
+      - svc-dt.dt.svc.tkdt.k8s
+      - svc.tkdt.k8s
+      - dt.svc.tkdt.k8s
+     hostname: dths2
+     volumes:
+     - name: wulin
+       hostPath:
+        path: /opt/wulin/
+     - name: zfs-storage
+       hostPath:
+         path: /opt/zfs
+     imagePullSecrets:
+     - name: dkreg
+     #runtimeClassName: gvisor
+     containers:
+     - name: dths2
+       image: dkreg.taroko:5000/usdt.hdp34
+       imagePullPolicy: Always
+       tty: true
+       command: ["/bin/bash", "-c"]
+       # Provide the multi-line block of script code
+       args:
+       - |
+         useradd -m -s /bin/bash rhive
+         echo 'rhive:rhive' | chpasswd
+         useradd -m -s /bin/bash ghive                                    
+         echo 'ghive:ghive' | chpasswd
+         chgrp bigred /etc/shadow
+         chmod 550 /etc/shadow
+         echo "export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/" > /home/bigred/dkc.env 
+         chown bigred:bigred /home/bigred/dkc.env
+         /bin/bash
+       securityContext:
+         privileged: true
+       volumeMounts:
+       - name: zfs-storage
+         mountPath: /opt/zfs
+       - name: wulin
+         mountPath: /home/bigred/wulin
+       ports:
+       - containerPort: 10000
+         protocol: TCP
+         hostPort: 10000
+     nodeSelector:
+       dt: master

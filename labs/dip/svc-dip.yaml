@@ -1,0 +1,9 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: svc-dip
+  namespace: dip
+spec:
+  selector:
+    app: dip
+  clusterIP: None

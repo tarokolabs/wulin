@@ -1,0 +1,88 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: lkhadm
+  namespace: lkh
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: lkhadm
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: lkhadm
+  namespace: lkh
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lkhadm
+  namespace: lkh
+#  annotations:
+#    tkport: "tkgw:22102:22102"
+spec:
+  selector:
+    dep: lkhadm
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lkhadm
+  labels:
+    dep: lkhadm
+  namespace: lkh
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      dep: lkhadm
+  template:
+    metadata:
+      labels:
+        dep: lkhadm
+      name: lkhadm
+      namespace: lkh
+    spec:
+     dnsPolicy: None
+     dnsConfig:
+      nameservers:
+      - 10.98.64.10
+      searches:
+      - svc-lkh.lkh.svc.tklkh.k8s
+      - lkh.svc.tklkh.k8s
+      - svc.tklkh.k8s
+     hostname: lkhadm
+     volumes:
+     - name: wulin
+       hostPath:
+        path: /opt/wulin/
+     - name: zfs-storage
+       hostPath:
+         path: /opt/zfs
+     serviceAccountName: lkhadm
+     imagePullSecrets:
+     - name: dkreg
+#     runtimeClassName: gvisor
+     containers:
+     - name: lkhadm
+       image: dkreg.taroko:5000/uslkh
+       imagePullPolicy: IfNotPresent
+       tty: true
+       securityContext:
+         privileged: true
+       volumeMounts:
+       - name: zfs-storage
+         mountPath: /opt/zfs
+       - name: wulin
+         mountPath: /home/bigred/wulin
+       ports:
+       - containerPort: 22
+         protocol: TCP
+         hostPort: 22102
+     nodeSelector:
+       app: taroko

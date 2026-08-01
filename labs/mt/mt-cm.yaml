@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mt-init
+  namespace: taroko
+data:
+  ash.init: |
+    #!/bin/bash
+    for n in rbean gbean ybean
+    do
+      adduser -s /bin/ash -h /opt/zfs/users/${n} -s /bin/ash -G wheel -D ${n}
+      echo -e "${n}\n${n}\n" | passwd ${n}
+      mkdir -p /opt/zfs/users/${n}/.kube && chown ${n}:root /opt/zfs/users/${n}/.kube
+    done 
+    wget https://github.com/hadolint/hadolint/releases/download/v2.14.0/hadolint-Linux-x86_64 -O /usr/bin/hadolint
+    [ "$?" == "0" ] && sudo chmod +x /usr/bin/hadolint
+
+    wget -nv https://github.com/stackrox/kube-linter/releases/download/v0.8.3/kube-linter-linux.tar.gz &>/dev/null
+    if [ "$?" == "0" ]; then
+       tar zxvf kube-linter-linux.tar.gz &>/dev/null
+       mv kube-linter /usr/local/bin/ && sudo chmod +x /usr/local/bin/kube-linter 
+    fi

@@ -1,0 +1,20 @@
+alias ping='ping -c 4'
+alias dir='ls -alh '
+alias bye='sudo shutdown -h now'
+if [ -z "$SSH_TTY" ]; then
+   export LANG=en_US.UTF-8
+   export LANGUAGE=en_US
+   export LC_ALL=en_US.UTF-8
+else
+   export LC_ALL=zh_TW.UTF-8
+fi
+if [ "$USER" == "" ]; then
+   if [ -f /opt/zfs/sys/usdt.boot ]; then
+      source /opt/zfs/sys/usdt.boot
+   fi
+   sudo /etc/init.d/ssh start
+else
+   if [ -f /opt/zfs/sys/usdt34.bash ]; then
+      source  /opt/zfs/sys/usdt34.bash
+   fi
+fi
