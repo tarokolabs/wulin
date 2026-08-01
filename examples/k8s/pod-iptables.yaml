@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-iptables
+spec:
+  hostNetwork: true
+  containers:
+  - name: pod-iptables
+    image: quay.io/cloudwalker/alp.base
+    tty: true
+    command: ["/bin/sh"]
+    securityContext:
+      privileged: true
+  nodeName: c31-worker2

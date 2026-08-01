@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: net-stress-test
+  namespace: default
+spec:
+  containers:
+  - name: net-stress-app-container
+    image: nicolaka/netshoot
+    # 下載 /dev/zero 到 /dev/null 來產生巨大的內部網路流量
+    # 註：此測試需有另一個內部服務接收，這裡以 wget 模擬大量傳出行為
+    # 為了簡化，直接在 Pod 內透過 dd 產生大流量送往外部 IP (例如 Cloudflare DNS)
+    command: ["/bin/sh", "-c"]
+    args: 
+      - "while true; do cat /dev/zero | nc -u kube-dns.kube-system 53; done"

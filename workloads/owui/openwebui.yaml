@@ -1,0 +1,29 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: owui
+  labels:
+    app: owui
+spec:
+  containers:
+    - name: owui
+      image: ghcr.io/open-webui/open-webui:ollama
+      ports:
+        - containerPort: 8080
+          hostPort: 3000
+      env:
+      - name: WEBUI_AUTH
+        value: "False"
+      volumeMounts:
+        - name: owui-storage
+          mountPath: /app/backend/data
+        - name: ollama-storage
+          mountPath: /root/.ollama
+  volumes:
+    - name: owui-storage
+      hostPath:
+        path: /opt/zfs/owui
+    - name: ollama-storage
+      hostPath:
+        path: /opt/zfs/ollama
+  nodeName: tkllm-worker2

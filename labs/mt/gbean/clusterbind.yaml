@@ -1,0 +1,13 @@
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: gclusterbind
+  namespace: psql 
+subjects:
+- kind: User
+  name: gbean
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole #this must be Role or ClusterRole
+  name: gclusterole 
+  apiGroup: rbac.authorization.k8s.io 

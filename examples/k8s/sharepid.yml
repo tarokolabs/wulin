@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sharepid
+  annotations:
+    kubectl.kubernetes.io/default-container: "shell"
+spec:
+  shareProcessNamespace: true
+  hostname: xyz 
+  containers:
+  - name: derby
+    image: quay.io/cloudwalker/alpine.derby
+    imagePullPolicy: Always
+  - name: shell
+    image: quay.io/cloudwalker/alp.base
+    imagePullPolicy: IfNotPresent
+    tty: true  

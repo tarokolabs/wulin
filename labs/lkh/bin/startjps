@@ -1,0 +1,10 @@
+#!/bin/bash
+
+w="dtw-0 dtw-1 dtw-2"
+
+for n in $w
+do
+  scp wulin/wk/dt/bin/jpslog.sh $n:/tmp/jpslog.sh
+  [ "$?" != "0" ] && echo "wulin/wk/dt/bin/jpslog.sh copy failure" && exit 1
+  ssh $n 'nohup /tmp/jpslog.sh &>/dev/null &'
+done

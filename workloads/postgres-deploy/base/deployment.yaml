@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:11
+        ports:
+        - containerPort: 5432
+        envFrom:
+        - secretRef:
+            name: postgres-secret
+        volumeMounts:
+        - name: pgdata
+          mountPath: /var/lib/postgresql/data
+        - name: init-data
+          mountPath: /docker-entrypoint-initdb.d/init-n8n-user.sh
+          subPath: init-data.sh
+      volumes:
+      - name: pgdata
+        persistentVolumeClaim:
+          claimName: dep-pvc
+      - name: init-data
+        configMap:
+          name: init-data
+          defaultMode: 0744

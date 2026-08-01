@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-goweb
+  labels:
+    app: dep-goweb
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dep-goweb
+  template:
+    metadata:
+      labels:
+        app: dep-goweb
+    spec:
+      containers:
+      - name: goweb
+        image: quay.io/cloudwalker/alp.goweb:24.01
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: goweb-hp
+          mountPath: "/opt/www"
+        env:
+        - name: NODE_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+      volumes:
+      - name: goweb-hp
+        hostPath:
+          path: /opt/zfs/goweb

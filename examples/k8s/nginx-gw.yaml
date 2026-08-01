@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-ng
+  annotations:
+    tkport: "tkgw:5566:5566"
+spec:
+  selector:
+    app: pod-ng
+  ports:
+    - protocol: TCP
+      port: 5566
+      targetPort: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: pod-ng
+  name: pod-ng
+spec:
+  containers:
+  - name: myng
+    image: dkreg.taroko:5000/nginx
+    imagePullPolicy: IfNotPresent
+    ports:
+     - containerPort: 80

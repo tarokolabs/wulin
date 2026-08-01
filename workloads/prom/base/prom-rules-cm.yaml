@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prom-rules-conf
+  labels:
+    name: prom-rules-conf
+data:
+  control-plane-rules.yaml: |
+    groups:
+    - name: control_plane
+      rules:
+      - alert: ComponentDown
+        expr: > 
+          up{job=~"kubernetes-apiserver|kubernetes-etcd|kubernetes-scheduler|kubernetes-controller-manager"} == 0
+          or 
+          absent(up{job="kubernetes-scheduler"})
+        for: 1m
+        annotations:
+          summary: "K8S 控制平面核心元件斷線 ({{ $labels.job }})"
+          description: >
+            警告！控制平面元件 {{ $labels.job }} 位於節點 {{ $labels.instance }} 上，已經失去連線超過 1 分鐘。  

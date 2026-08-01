@@ -1,0 +1,22 @@
+#!/bin/bash
+source /opt/zfs/sys/uslkh.bash
+echo -e "[start Hadoop 3.4.1]"
+sleep 30
+starthdfs
+startyarn
+sleep 30
+
+kubectl scale --replicas=1 deployment/dep-lkhnfs -n lkh &>/dev/null
+sleep 30
+nfsgw=$(kubectl get pods -n lkh | grep lkhnfs |  cut -d ' ' -f1)
+kubectl exec $nfsgw -n lkh -- showmount -e 172.22.64.3 &>/dev/null
+[ "$?" == "0" ] && echo "HDFS NFS Gatway started"
+
+kubectl scale --replicas=1 deployment/dep-lkhhs2 -n lkh &>/dev/null
+sleep 65
+ssh lkhhs2.lkh "nohup hive --service hiveserver2 &>/dev/null &" &>/dev/null
+if [ "$?" == "0" ]; then
+   sleep 10 && nc -w 1 lkhhs2.lkh 10000 
+   [ "$?" == "0" ] && echo "Hive Server 2 started"
+fi
+echo ""

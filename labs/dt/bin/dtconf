@@ -1,0 +1,42 @@
+#!/bin/bash
+
+sudo chown bigred:wheel -R /opt/zfs/sys/ &>/dev/null
+
+echo "[套件設定]"
+cp ~/wulin/wk/dt/conf/hive-4.0.1/* /opt/zfs/sys/apache-hive-4.0.1-bin/conf/ &>/dev/null
+[ "$?" == "0" ] && echo "Hive 4.0.1 ok"
+
+cp ~/wulin/wk/dt/conf/hive-4.1.0/* /opt/zfs/sys/apache-hive-4.1.0-bin/conf/ &>/dev/null
+[ "$?" == "0" ] && echo "Hive 4.1.0 ok"
+
+cp ~/wulin/wk/dt/conf/hive-4.2.0/* /opt/zfs/sys/apache-hive-4.2.0-bin/conf/ &>/dev/null
+[ "$?" == "0" ] && echo "Hive 4.2.0 ok"
+
+cp ~/wulin/wk/dt/conf/hadoop-3.5.0/* /opt/zfs/sys/hadoop-3.5.0/etc/hadoop/ &>/dev/null
+[ "$?" == "0" ] && echo "Hadoop 3.5.0 ok"
+
+cp ~/wulin/wk/dt/conf/hadoop-3.4.3/* /opt/zfs/sys/hadoop-3.4.3/etc/hadoop/ &>/dev/null
+[ "$?" == "0" ] && echo "Hadoop 3.4.3 ok"
+
+cp ~/wulin/wk/dt/conf/spark-3.4.4/* /opt/zfs/sys/spark-3.4.4-bin-hadoop3/conf/ &>/dev/null 
+[ "$?" == "0" ] && echo "Spark 3.4.4 ok" 
+
+cp ~/wulin/wk/dt/conf/spark-3.5.8/* /opt/zfs/sys/spark-3.5.8-bin-hadoop3/conf/ &>/dev/null
+[ "$?" == "0" ] && echo "Spark 3.5.8 ok"
+
+#cp ~/wulin/wk/dt/conf/zookeeper-3.8.4/* /opt/zfs/sys/apache-zookeeper-3.8.4-bin/conf/
+#[ "$?" == "0" ] && echo "Zookeeper 3.8.4 ok"
+
+#cp ~/wulin/wk/dt/conf/hbase-2.5.11/* /opt/zfs/sys/hbase-2.5.11/conf/
+#[ "$?" == "0" ] && echo "HBase 2.5.11 ok"
+
+#cp /opt/zfs/sys/phoenix-hbase-2.5-5.2.1-bin/phoenix-server-hbase-2.5-5.2.1.jar \
+#/opt/zfs/sys/hbase-2.5.11/lib/phoenix-server-hbase-2.5-5.2.1.jar
+#[ "$?" == "0" ] && echo "Phoenix 5.2.1 ok"
+
+cp ~/wulin/wk/dt/conf/usdt.boot /opt/zfs/sys/
+[ "$?" == "0" ] && echo "usdt.boot ok"
+cp ~/wulin/wk/dt/conf/usdt34.bash /opt/zfs/sys/
+[ "$?" == "0" ] && echo "usdt34.bash ok"
+cp ~/wulin/wk/dt/conf/usdt35.bash /opt/zfs/sys/                                           
+[ "$?" == "0" ] && echo "usdt35.bash ok"

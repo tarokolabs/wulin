@@ -1,0 +1,7 @@
+namespace: "prometheus"
+
+resources:
+- ./AlertManagerConfigmap.yaml
+- ./AlertTemplateConfigMap.yaml
+- ./Deployment.yaml
+- ./Service.yaml

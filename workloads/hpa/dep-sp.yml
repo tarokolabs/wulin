@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-sp
+  labels:
+    app: dep-sp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pod-sp
+  template:
+    metadata:
+      labels:
+        app: pod-sp
+    spec:
+      containers:
+      - name: pod-sp
+        image: quay.io/cloudwalker/alp.goweb:23.6.0
+        imagePullPolicy: IfNotPresent
+        lifecycle:
+          postStart:
+            exec:
+             command:
+             - /bin/bash
+             - -c
+             - |
+               cp -u -r /opt/web/. /opt/www/
+        ports:
+          - containerPort: 8080
+        resources:
+          requests:
+            cpu: 70m

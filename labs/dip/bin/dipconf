@@ -1,0 +1,14 @@
+#!/bin/bash
+
+echo "[套件設定]"
+cp ~/wulin/wk/dip/conf/spark-3.5.4/* /opt/zfs/sys/spark-3.5.4-bin-hadoop3/conf/
+[ "$?" == "0" ] && echo "Spark 3.5.4 ok"
+cp ~/wulin/wk/dip/conf/spark-3.4.4/* /opt/zfs/sys/spark-3.4.4-bin-hadoop3/conf/
+[ "$?" == "0" ] && echo "Spark 3.4.4 ok"
+cp ~/wulin/wk/dip/conf/hadoop-3.4.1/* /opt/zfs/sys/hadoop-3.4.1/etc/hadoop/
+[ "$?" == "0" ] && echo "Hadoop 3.4.1 ok"
+
+cp ~/wulin/wk/dip/conf/usdt.boot /opt/zfs/sys/
+[ "$?" == "0" ] && echo "usdt.boot ok"
+cp ~/wulin/wk/dip/conf/usdt.bash /opt/zfs/sys/
+[ "$?" == "0" ] && echo "usdt.bash ok"

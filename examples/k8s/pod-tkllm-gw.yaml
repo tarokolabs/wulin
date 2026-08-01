@@ -1,0 +1,14 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: podgw
+  labels:
+    app: podgw 
+spec:
+  containers:
+    - name: podgw
+      image: quay.io/cloudwalker/alp.goweb:24.1
+      ports:
+        - containerPort: 8080
+          hostPort: 9999
+  nodeName: tkllm-worker2

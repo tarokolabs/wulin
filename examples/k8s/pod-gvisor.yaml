@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-gvisor
+spec:
+  runtimeClassName: gvisor
+  containers:
+  - name: base
+    image: quay.io/cloudwalker/alp.base
+    securityContext:
+      privileged: true

@@ -1,0 +1,8 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: svc-k-exname
+  namespace: k
+spec:
+  type: ExternalName
+  externalName: svc-j.j.svc.tklkh.k8s

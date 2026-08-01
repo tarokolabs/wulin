@@ -1,0 +1,86 @@
+{
+  "name": "My workflow 3",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -300,
+        0
+      ],
+      "id": "d5972c1e-3b17-4b84-98ba-d8790923e4a7",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "command": "hostname -i"
+      },
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        0
+      ],
+      "id": "e21e1e01-8630-44d6-ae96-1dac147ef72b",
+      "name": "SSH",
+      "credentials": {
+        "sshPassword": {
+          "id": "qguV8adqPUjeauHt",
+          "name": "tkadm"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "stdout",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        140,
+        0
+      ],
+      "id": "c49d109b-317c-442d-aca9-a3b21a88095b",
+      "name": "Convert to File"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "SSH",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c10f316b-b3c8-4cfc-9f92-9f3e6e52c8c5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "41e0d366968b82c4e66dba456b4ba4e24529b362d2de16c20c6a8eb505578a5a"
+  },
+  "id": "5XY6USTJS1LoE1lq",
+  "tags": []
+}

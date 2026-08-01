@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sigpod
+spec:
+  #os:
+  #  name: linux
+  volumes:
+  - name: sigpod
+    hostPath:
+     path: /opt/zfs/sigpod
+  containers:
+    - name: signal 
+      image: quay.io/cloudwalker/signal-test
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+       - name: sigpod
+         mountPath: /tmp
+       # stopSignal: SIGUSR1
+  terminationGracePeriodSeconds: 60

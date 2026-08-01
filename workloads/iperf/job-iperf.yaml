@@ -1,0 +1,34 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-iperf
+spec:
+  ttlSecondsAfterFinished: 300
+  template:
+    spec:
+      containers:
+      - name: iperf
+        image: quay.io/cloudwalker/alp.base
+        command:
+          - sh
+          - "-c"
+          - |
+            sleep 10
+            d=$(dig svc-iperf.iperf.svc.tkbp.k8s. +short)
+            [ "$d" == "" ] && echo "svc-iperf.iperf not found" && exit 1
+            [ -f /var/lib/iperf.log ] && rm /var/lib/iperf.log
+            for n in $d
+            do
+              echo "[$n]" >> /var/lib/iperf.log
+              iperf3 -c "$n" -p 12345 | head -n 5 >> /var/lib/iperf.log
+              echo "" >> /var/lib/iperf.log
+            done
+        volumeMounts:
+         - mountPath: "/var/lib"
+           name: iperf
+      volumes:
+      - name: iperf
+        hostPath:
+          path: /opt/zfs/
+      restartPolicy: Never
+  backoffLimit: 4 

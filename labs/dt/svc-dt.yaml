@@ -1,0 +1,9 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: svc-dt
+  namespace: dt
+spec:
+  selector:
+    app: dt
+  clusterIP: None

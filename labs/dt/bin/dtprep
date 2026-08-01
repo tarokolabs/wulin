@@ -1,0 +1,35 @@
+#!/bin/bash
+
+read -p "下載 DT 套件 ? (YES/NO) " ans
+if [ "$ans" == "YES" ]; then
+
+   if [ -d /opt/zfs/sys/ ]; then
+      f=$(ls /opt/zfs/sys/)
+      [ "$f" != "" ] && echo "DT package existed" && exit 0
+   fi
+   sudo mkdir -p /opt/zfs/sys/; sudo chmod 777 /opt/zfs/sys/
+   while read line; do
+     wget $line &>/tmp/${line##*/}.out
+     if [ "$?" == "0" ]; then
+        n=${line##*/}
+        tar xvfz $n -C /opt/zfs/sys/ &>/dev/null
+        [ "$?" == "0" ] && echo "$n ok"
+        rm $n
+     else
+        n=${line##*/}
+        echo -n "$n : "; cat /tmp/download.out | tail -n 3; rm $n; echo
+     fi
+   done < ~/wulin/wk/dt/bin/dlist
+
+   # install Tez 0.10.5
+   wget https://dlcdn.apache.org/tez/0.10.5/apache-tez-0.10.5-bin.tar.gz &>/dev/null
+   tar -zxvf apache-tez-0.10.5-bin.tar.gz -C /opt/zfs/ &>/dev/null
+   mv /opt/zfs/apache-tez-0.10.5-bin /opt/zfs/sys/tez
+   [ "$?" == "0" ] && echo "Tez 0.10.5 ok"
+
+   sudo chown -R bigred:wheel /opt/zfs/sys/
+fi
+
+echo ""
+[ -f ~/wulin/wk/dt/bin/dtconf ] &&  ~/wulin/wk/dt/bin/dtconf
+

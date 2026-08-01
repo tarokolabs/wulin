@@ -1,0 +1,6 @@
+namespace: "grafana"
+
+resources:
+- ./namespace.yaml
+- ./dep-grafana.yaml
+- ./svc-grafana.yaml 

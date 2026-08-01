@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-usdt-hdp34
+spec:
+  dnsPolicy: ClusterFirst
+  runtimeClassName: gvisor
+  nodeName: tkdt-worker1
+  containers:
+  - image: dkreg.taroko:5000/usdt.hdp34
+    imagePullPolicy: Always
+    name: hdp34
+    tty: true
+    securityContext:
+      privileged: true
+    volumeMounts:
+      - mountPath: "/opt/zfs/sys"
+        name: usdt-hdp34-storage
+  volumes:
+    - name: usdt-hdp34-storage
+      hostPath:
+        path: /opt/zfs/sys

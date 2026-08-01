@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubectl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: kubectl
+  template:
+    metadata:
+      labels:
+        role: kubectl
+    spec:
+      containers:
+      - image: bitnami/kubectl
+        name: kubectl
+        tty: true
+        securityContext:
+          privileged: true
+#       volumeMounts:
+#       - name: kube-config
+#         mountPath: /.kube/config
+#      volumes:
+#      - name: kube-config
+#        hostPath:
+#          path: /home/$USER/.kube/

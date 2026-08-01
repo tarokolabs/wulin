@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-public
+  namespace: kube-public
+  labels:
+    dt: hdp
+spec:
+  containers:
+  - name: pp
+    image: quay.io/cloudwalker/nginx

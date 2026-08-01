@@ -1,0 +1,24 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: podinfo-monitor
+  # 注意：這裡的 namespace 必須與你的 Prometheus Server 或是 Operator 監控的 namespace 一致
+  # 如果不確定，可以先放在與 Prometheus 相同的 namespace (例如 prometheus)
+  namespace: prometheus
+  labels:
+    # 關鍵：這個 label 必須符合你 Prometheus 實例的 serviceMonitorSelector
+    # 常見的標籤如 release: prometheus 或 app: prometheus-operator
+    release: prometheus
+spec:
+  # 告訴 Prometheus 去哪裡找 Service
+  selector:
+    matchLabels:
+      app: podinfo
+  # 告訴 Prometheus 去哪一個 Namespace 找這個 Service
+  namespaceSelector:
+    matchNamespaces:
+      - monitoring # 或是你部署 podinfo 的 namespace
+  endpoints:
+  - port: http # 對應到 podinfo Service 的 port 名稱
+    path: /metrics
+    interval: 15s

@@ -1,0 +1,79 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -300,
+        0
+      ],
+      "id": "5f31bb21-b636-4148-b201-a2046164db42",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "command": "cat /etc/os-release\necho\nls -al /home\necho\nwhoami"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        0
+      ],
+      "id": "4b740b3a-cf32-4191-80f8-96844ed1d3f8",
+      "name": "Execute Command"
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "stdout",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        80,
+        0
+      ],
+      "id": "6a172211-a29d-425f-8a06-669f3b96f94e",
+      "name": "Convert to File"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Execute Command",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "cce09e0f-27ef-4b56-be88-482f62193be1",
+  "meta": {
+    "instanceId": "3defe97599ee68ebe4c2dfd072cb1ad2bbc708b810b6150e8f9b7e0ff24ceeb2"
+  },
+  "id": "EX6EfevHcpiX8Xqu",
+  "tags": []
+}

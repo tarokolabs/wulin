@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+  <property>
+        <name>hive.execution.engine</name>
+        <value>tez</value>
+  </property>
+
+  <property>
+        <name>hive.tez.container.size</name>
+        <value>1024</value>
+  </property>
+
+ <property>
+   <name>javax.jdo.option.ConnectionURL</name>
+   <value>jdbc:mysql://metadb:3306/metastore</value>
+ </property>
+ <property>
+    <name>javax.jdo.option.ConnectionDriverName</name>
+    <value>org.mariadb.jdbc.Driver</value>
+ </property>
+ <property>
+    <name>javax.jdo.option.ConnectionUserName</name>
+    <value>bigred</value>
+ </property>
+ <property>
+    <name>javax.jdo.option.ConnectionPassword</name>
+    <value>bigred</value>
+ </property>
+
+ <property>
+    <name>hive.server2.enable.doAs</name>
+    <value>true</value>
+ </property>
+
+ <property>
+    <name>hive.server2.authentication</name>
+    <value>PAM</value>
+ </property>
+ <property>
+    <name>hive.server2.authentication.pam.services</name>
+    <value>login,sshd</value>
+ </property>
+
+ <property>
+    <name>hive.server2.thrift.bind.host</name>
+    <value>dths2</value>
+ </property>
+ <property>
+    <name>hive.server2.thrift.port</name>
+    <value>10000</value>
+ </property>
+
+</configuration>

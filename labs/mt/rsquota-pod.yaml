@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rsquota-pod
+  namespace: rbean
+spec:
+  containers:
+  - name: nginx
+    image: quay.io/cloudwalker/nginx 
+    tty: true
+    resources:
+      requests:
+        cpu: 0.4
+        memory: 256Mi
+      limits:
+         cpu: 2.0
+         memory: 512Mi 

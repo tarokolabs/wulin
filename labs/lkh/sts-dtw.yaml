@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: dtw
+  namespace: lkh
+  labels:
+    sts: dtw
+spec:
+  selector:
+    matchLabels:
+      sts: dtw
+  serviceName: "svc-lkh"
+  volumeClaimTemplates:                 
+  - metadata:
+      name: dn
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: local-path
+      resources:
+        requests:
+          storage: 200Gi
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        sts: dtw
+        app: lkh
+    spec:
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 10.98.64.10
+        searches:
+        - svc-lkh.lkh.svc.tklkh.k8s
+        - lkh.svc.tklkh.k8s
+        - svc.tklkh.k8s
+      volumes:
+        - name: lkh-sys
+          hostPath:
+            path: /opt/zfs/sys
+      runtimeClassName: gvisor
+      containers:
+        - image: dkreg.taroko:5000/uslkh
+          imagePullPolicy: IfNotPresent
+          name: dtw
+          tty: true
+          volumeMounts:
+           - name: lkh-sys
+             mountPath: /opt/zfs/sys
+           - name: dn
+             mountPath: /home/bigred/dn

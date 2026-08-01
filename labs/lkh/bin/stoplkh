@@ -1,0 +1,12 @@
+#!/bin/bash
+source /opt/zfs/sys/uslkh.bash
+
+kubectl scale --replicas=0 deployment/dep-lkhnfs -n lkh &>/dev/null
+[ "$?" == "0" ] && echo -e "HDFS NFS Gatway stoped"
+
+kubectl scale --replicas=0 deployment/dep-lkhhs2 -n lkh &>/dev/null
+[ "$?" == "0" ] && echo -e "Hive Server 2 stoped"
+
+echo -e "\n[stop Hadoop 3.4.1]"
+stopyarn
+stophdfs

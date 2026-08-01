@@ -1,0 +1,51 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: pvc-artifact-pipeline-
+spec:
+  dnsPolicy: "None"
+  dnsConfig:
+    nameservers:
+     - "10.98.64.10"
+    searches:
+     - svc.tkha.k8s
+     - taroko.svc.tkha.k8s 
+  entrypoint: pipeline
+ 
+  volumeClaimTemplates:
+  - metadata:
+      name: workdir
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: local-path     
+      resources:
+        requests:
+          storage: 5Gi
+
+  templates:
+  - name: pipeline
+    steps:
+    - - name: generate-data
+        template: data-creator
+    - - name: process-data
+        template: data-consumer
+
+  - name: data-creator
+    container:
+      image: alpine:latest
+      command: [sh, -c]
+      args: ["echo 'High performance data generated from Taroko Pipeline' > /mnt/vol/dataset.txt"]
+      volumeMounts:
+      - name: workdir
+        mountPath: /mnt/vol
+
+  - name: data-consumer
+    container:
+      image: alpine:latest
+      command: [sh, -c]
+      args: ["cat /mnt/vol/dataset.txt"]
+      volumeMounts:
+      - name: workdir
+        mountPath: /mnt/vol
+
+

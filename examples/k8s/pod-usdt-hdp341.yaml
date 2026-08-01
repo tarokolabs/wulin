@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-usdt-hdp341
+spec:
+  containers:
+  - image: dkreg.taroko:5000/usdt.hdp341
+    name: hdp341
+    tty: true
+    securityContext:
+      privileged: true
+    volumeMounts:
+      - mountPath: "/opt/zfs/sys"
+        name: usdt-hdp341-storage
+  volumes:
+    - name: usdt-hdp341-storage
+      hostPath:
+        path: /opt/zfs/sys

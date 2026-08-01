@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tcp-readiness
+spec:
+  containers:
+  - name: tcp-readiness
+    image: quay.io/cloudwalker/alp.base
+    tty: true
+    command: [/bin/sh]
+    args:
+    - -c
+    - sleep 20; timeout 20s nc -l localhost -p 9999; sleep 60; nc -l localhost -p 9999
+    ports:
+    - containerPort: 9999
+    readinessProbe:
+      tcpSocket:
+        port: 9999
+      initialDelaySeconds: 5
+      periodSeconds: 5 

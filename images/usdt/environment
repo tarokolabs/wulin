@@ -1,0 +1,7 @@
+JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+HADOOP_CONF_DIR=/opt/dt/hadoop-3.4.0/etc/hadoop/
+HADOOP_HOME=/opt/dt/hadoop-3.4.0
+HIVE_HOME=/opt/dt/apache-hive-3.1.3-bin
+SPARK_HOME=/opt/dt/spark-3.5.2-bin-hadoop3
+PATH=/usr/lib/jvm/java-1.8-openjdk/bin:/home/bigred/bin:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/dt/hadoop-3.4.0/etc/hadoop/bin:/opt/dt//hadoop-3.4.0/etc/hadoop/sbin:/opt/dt/apache-hive-3.1.3-bin/bin:/opt/dt/spark-3.5.2-bin-hadoop3/bin
+HADOOP_LOG_DIR=/tmp

@@ -1,0 +1,8 @@
+namespace: "dkmail"
+
+resources:
+- ./namespace.yaml
+- ./mail-config.yaml
+- ./mail-dep.yaml
+- ./mail-pvc.yaml 
+- ./mail-svc.yaml 

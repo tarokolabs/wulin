@@ -1,0 +1,149 @@
+{
+  "meta": {
+    "instanceId": "8c8c5237b8e37b006a7adce87f4369350c58e41f3ca9de16196d3197f69eabcd"
+  },
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "7279f808-1031-4df2-be4e-b44fee17e8d0",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        800,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.id }}",
+              "value2": "={{ $workflow.id }}"
+            }
+          ]
+        }
+      },
+      "id": "108340a9-1a16-4be4-acfb-51bfdfc80c16",
+      "name": "If this workflow",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1260,
+        520
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "83da6184-1f83-4e08-a4ab-c84221cf176d",
+      "name": "Do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "workflowId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        }
+      },
+      "id": "d03c6aaa-a1c5-4652-aa24-acb172c9518c",
+      "name": "Delete Workflows",
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        660
+      ],
+      "credentials": {
+        "n8nApi": {
+          "id": "162",
+          "name": "Docker"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "filters": {}
+      },
+      "id": "16339af6-b59a-41c5-9a77-6d086e0ae450",
+      "name": "Get All Workflows",
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        520
+      ],
+      "credentials": {
+        "n8nApi": {
+          "id": "162",
+          "name": "Docker"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## DANGER \nThis workflow will delete all other workflows",
+        "width": 570
+      },
+      "id": "b73773b3-9f5b-4601-9c04-2c8894db7f14",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        800,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Get All Workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If this workflow": {
+      "main": [
+        [
+          {
+            "node": "Do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Delete Workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Workflows": {
+      "main": [
+        [
+          {
+            "node": "If this workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bash-webhook-svc
+  namespace: monitoring
+spec:
+  selector:
+    app: bash-webhook
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bash-webhook
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bash-webhook
+  template:
+    metadata:
+      labels:
+        app: bash-webhook
+    spec:
+      containers:
+        - name: webhook-container
+          # 假設您已經將 image build 並 tag 為 bash-webhook:local
+          image: dkreg.taroko:5000/wh.bash 
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
