@@ -32,4 +32,4 @@ VMware Workstation + Talos Linux 世代（VMTK2024）的內容，來自平台 re
 
 ## 追蹤
 
-處置進度見本 repo 的 `legacy` 標籤 issue。
+處置進度見 [#3 處置 legacy/ 的 275 個舊世代檔案](https://github.com/tarokolabs/wulin/issues/3)。
