@@ -12,9 +12,9 @@ tasks:
       - shellcheck src/web/cgi/*.sh
 
   lint:hadolint:
-    desc: Lint Dockerfile
+    desc: Lint Containerfile
     cmds:
-      - hadolint Dockerfile
+      - hadolint Containerfile
 
   lint:kube-linter:
     desc: Lint kubernetes yaml
