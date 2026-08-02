@@ -67,7 +67,7 @@ spec:
      serviceAccountName: dtadm
      imagePullSecrets:
      - name: dkreg
-#     runtimeClassName: gvisor
+#     runtimeClassName: crun
      containers:
      - name: dtadm
        image: quay.io/cloudwalker/usdt.hdp35

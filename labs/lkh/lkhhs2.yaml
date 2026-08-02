@@ -60,7 +60,7 @@ spec:
         path: /opt/zfs/db
      imagePullSecrets:
      - name: dkreg
-     # runtimeClassName: gvisor
+     # runtimeClassName: crun
      containers:
      - name: lkhhs2
        image: dkreg.taroko:5000/uslkh

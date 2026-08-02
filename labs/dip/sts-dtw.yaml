@@ -36,7 +36,7 @@ spec:
         - name: dip-sys
           hostPath:
             path: /opt/zfs/sys
-      runtimeClassName: gvisor
+      runtimeClassName: crun
       containers:
         - image: dkreg.taroko:5000/usdt.hdp341
           imagePullPolicy: Always

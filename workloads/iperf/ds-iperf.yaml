@@ -8,7 +8,7 @@ spec:
 #      app: iperf3
   template:
     spec:
-      runtimeClassName: gvisor
+      runtimeClassName: crun
       containers:
       - name: iperf3
         image: quay.io/cloudwalker/alp.base

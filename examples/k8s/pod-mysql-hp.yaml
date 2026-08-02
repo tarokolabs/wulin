@@ -5,7 +5,7 @@ metadata:
     app: m1
   name: pod-mysql-hp
 spec:
-  runtimeClassName: gvisor
+  runtimeClassName: crun
   containers:
   - image: quay.io/cloudwalker/oracle.mysql
     name: m1
