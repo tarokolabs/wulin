@@ -67,7 +67,7 @@ spec:
      serviceAccountName: dipadm
      imagePullSecrets:
      - name: dkreg
-#     runtimeClassName: gvisor
+#     runtimeClassName: crun
      containers:
      - name: dipadm
        image: dkreg.taroko:5000/usdt.hdp341

@@ -49,7 +49,7 @@ spec:
         - name: dt-sys
           hostPath:
             path: /opt/zfs/sys
-      runtimeClassName: gvisor
+      runtimeClassName: crun
       containers:
         - image: quay.io/cloudwalker/usdt.hdp35
           imagePullPolicy: IfNotPresent

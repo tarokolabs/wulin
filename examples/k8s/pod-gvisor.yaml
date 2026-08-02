@@ -1,3 +1,8 @@
+# gVisor 沙箱容器示範。
+# 需要 containerd 叢集（tk8s 的 conf 設 K8SCRI=containerd）——
+# gVisor 官方僅支援 containerd，平台預設的 CRI-O 路徑不提供 gvisor
+# RuntimeClass。驗證方式：pod 內 `uname -r` 應顯示 gVisor 核心
+# （例如 4.19.0-gvisor）而非主機核心。
 apiVersion: v1
 kind: Pod
 metadata:

@@ -38,7 +38,7 @@ spec:
         - name: lkh-sys
           hostPath:
             path: /opt/zfs/sys
-      runtimeClassName: gvisor
+      runtimeClassName: crun
       containers:
         - image: dkreg.taroko:5000/uslkh
           imagePullPolicy: IfNotPresent

@@ -4,7 +4,7 @@ metadata:
   name: pod-usdt-hdp350
 spec:
   dnsPolicy: ClusterFirst
-  runtimeClassName: gvisor
+  runtimeClassName: crun
   nodeName: tkdt-worker1
   containers:
   - image: dkreg.taroko:5000/usdt.hdp350

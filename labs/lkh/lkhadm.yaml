@@ -67,7 +67,7 @@ spec:
      serviceAccountName: lkhadm
      imagePullSecrets:
      - name: dkreg
-#     runtimeClassName: gvisor
+#     runtimeClassName: crun
      containers:
      - name: lkhadm
        image: dkreg.taroko:5000/uslkh
