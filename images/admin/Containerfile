@@ -20,7 +20,7 @@ RUN  mkdir -p /etc/skel/.ssh
 
 RUN apk update && apk upgrade && mkdir -p /lib/modules && mkdir -p /opt/www && \
     mv /opt/index.html /opt/www/ && mv /opt/cgi/ /opt/www/ && \
-    apk add --no-cache openssh-server postgresql-client openrc tzdata shellcheck fuse-overlayfs podman \
+    apk add --no-cache openssh-server openrc fuse-overlayfs podman \
     skopeo buildah k9s openssl mariadb-connector-c apache2-utils && \
 
     # dkreg registry 認證檔：以 htpasswd 於建置時生成（bcrypt，cost 12）。
