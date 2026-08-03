@@ -9,7 +9,7 @@
 
 REG="ghcr.io/tarokolabs/wulin"
 LABELS="--label=org.opencontainers.image.source=https://github.com/tarokolabs/wulin \
-        --label=org.opencontainers.image.licenses=GPL-2.0"
+        --label=org.opencontainers.image.licenses=GPL-2.0-or-later"
 WULIN=~/wulin
 ALPINE_VER="3.22.1"
 
