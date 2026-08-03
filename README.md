@@ -30,6 +30,17 @@ Taroko 的教材、工作負載與技術文件。
 
 進度看 [Taroko Roadmap](https://github.com/orgs/tarokolabs/projects/1)。
 
+## 建置素材（第三方二進位）
+
+lab image 的建置與部分 lab 需要不隨 repo 散佈的第三方檔案（授權合規與供應鏈信任——使用者應能自行驗證來源）。取得方式：
+
+```bash
+bin/fetch-deps.sh            # 全部
+bin/fetch-deps.sh mariadb    # 只取檔名含關鍵字的項目
+```
+
+每一項都自權威來源（Maven Central、Apache archive、Ubuntu archive、Spark 官方發行版）下載並以 SHA256 釘死，校驗失敗即中止。其中 OpenSSL 1.1.1f 的 deb 已 EOL——僅限教學叢集內部使用，適用範圍與決議見 tk8s#14。
+
 ## 授權
 
 本專案採 **GPL-2.0-or-later**（GNU GPL v2，或依你的選擇任何更新版本），與 `tk8s` 一致，見 [LICENSE](LICENSE)。第三方元件的授權見各自目錄。
