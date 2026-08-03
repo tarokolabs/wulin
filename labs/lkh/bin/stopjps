@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 w="dtw-0 dtw-1 dtw-2"
 
 for n in $w

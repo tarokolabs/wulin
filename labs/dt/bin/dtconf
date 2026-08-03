@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 sudo chown bigred:wheel -R /opt/zfs/sys/ &>/dev/null
 

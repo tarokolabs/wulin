@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 [ "$#" != "1" ] && echo "mkubeuser.sh user" && exit 1
 [ ! -d ${DIR_CSR} ] && mkdir -p ${DIR_CSR}

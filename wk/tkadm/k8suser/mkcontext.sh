@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # [ `hostname` != "tkadm" ] && echo "pls login tkadm" && exit 1
 

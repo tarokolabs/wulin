@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 [ ! -d ./opendata/dip ] && mkdir -p ./opendata/dip/
 

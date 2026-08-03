@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 fail=0
 if curl -s localhost:8080 | grep "/ -> /opt/www" &>/dev/null; then
   echo "test / ok"

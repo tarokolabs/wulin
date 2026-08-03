@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 nn="dtm-0"
 rs="dtm-1"

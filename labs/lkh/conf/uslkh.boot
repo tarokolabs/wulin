@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 [ -d /home/bigred/nn ] && chown -R bigred:bigred /home/bigred/nn
 [ -d /home/bigred/sn ] && chown -R bigred:bigred /home/bigred/sn

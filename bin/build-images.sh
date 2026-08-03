@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # 建置並推送 wulin 教材 image 至 GHCR（ghcr.io/tarokolabs/wulin/*）
 #
 # 用法：

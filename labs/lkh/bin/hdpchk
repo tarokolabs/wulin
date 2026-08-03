@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 m="dtm-0 dtm-1 dtm-2"
 w="dtw-0 dtw-1 dtw-2"
