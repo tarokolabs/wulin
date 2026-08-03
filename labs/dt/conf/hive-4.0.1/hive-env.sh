@@ -1,7 +1,7 @@
 # 1. 宣告基本環境變數
-export HADOOP_HOME=/opt/zfs/sys/hadoop-3.4.3   # 請確認為你實際的 Hadoop 3.x 路徑
+export HADOOP_HOME=/opt/taroko/sys/hadoop-3.4.3   # 請確認為你實際的 Hadoop 3.x 路徑
 export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
-export TEZ_HOME=/opt/zfs/tez
+export TEZ_HOME=/opt/taroko/tez
 export TEZ_CONF_DIR=$HADOOP_CONF_DIR           # 你的 tez-site.xml 存放位置
 
 # 2. 處理 Tez Jar 檔載入

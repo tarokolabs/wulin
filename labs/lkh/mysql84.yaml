@@ -44,10 +44,10 @@ spec:
      volumes:
      - name: db
        hostPath:
-        path: /opt/zfs/mysql84
+        path: /opt/taroko/mysql84
      - name: zfs-storage
        hostPath:
-         path: /opt/zfs
+         path: /opt/taroko
      imagePullSecrets:
      - name: dkreg
      containers:
@@ -59,7 +59,7 @@ spec:
          privileged: true
        volumeMounts:
        - name: zfs-storage
-         mountPath: /opt/zfs
+         mountPath: /opt/taroko
        - name: db
          mountPath: /var/lib/mysql
        ports:

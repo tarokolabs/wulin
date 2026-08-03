@@ -18,8 +18,8 @@ spec:
           - sh
           - "-c"
           - |
-            mkdir -p /opt/zfs/jenkins
-            chown -R 1000:1000 /opt/zfs/jenkins
+            mkdir -p /opt/taroko/jenkins
+            chown -R 1000:1000 /opt/taroko/jenkins
         volumeMounts:
           - mountPath: /opt
             name: opt

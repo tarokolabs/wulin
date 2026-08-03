@@ -7,7 +7,7 @@
 cat ~/.kube/config | grep "name: $1" &>/dev/null
 [ "$?" != "0" ] && echo "$1 not exist" && exit 1
 
-export K8SUSER=/opt/zfs/k8suser
+export K8SUSER=/opt/taroko/k8suser
 export STU=$1
 export MAS_IP=10.98.8.1
     

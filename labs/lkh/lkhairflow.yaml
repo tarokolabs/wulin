@@ -41,10 +41,10 @@ spec:
      volumes:
      - name: wulin
        hostPath:
-        path: /opt/wulin/
+        path: /opt/taroko/wulin/
      - name: zfs-storage
        hostPath:
-         path: /opt/zfs
+         path: /opt/taroko
      imagePullSecrets:
      - name: dkreg
      containers:
@@ -55,7 +55,7 @@ spec:
        command: ["/bin/bash", "-c"]
        args:
          - |
-           source /opt/zfs/sys/usdt.bash
+           source /opt/taroko/sys/usdt.bash
            # mkdir -p /home/bigred/hdfs
            # sudo mount -t nfs -o vers=3,proto=tcp,nolock,noacl,sync 172.22.8.3:/  /home/bigred/hdfs
            jupyter lab --allow-root --ip=0.0.0.0 --no-browser \
@@ -65,7 +65,7 @@ spec:
          privileged: true
        volumeMounts:
        - name: zfs-storage
-         mountPath: /opt/zfs
+         mountPath: /opt/taroko
        - name: wulin
          mountPath: /home/bigred/wulin
        ports:

@@ -29,6 +29,6 @@ spec:
       volumes:
       - name: iperf
         hostPath:
-          path: /opt/zfs/
+          path: /opt/taroko/
       restartPolicy: Never
   backoffLimit: 4 

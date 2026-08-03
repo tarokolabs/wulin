@@ -52,4 +52,4 @@ spec:
   volumes:
   - name: mariadb-data
     hostPath:
-      path: /opt/zfs/mariadb
+      path: /opt/taroko/mariadb

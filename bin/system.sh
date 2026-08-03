@@ -6,11 +6,11 @@ export NOW="--force --grace-period 0"
 export KUBE_EDITOR="nano"
 export TZ=Asia/Taipei
 export HOSTARG='reg=dkreg.taroko:5000,user=bigred,pass=bigred,tls=disabled'
-export KCN=$(cat /opt/zfs/tkadm/cn.txt)
+export KCN=$(cat /opt/taroko/tkadm/cn.txt)
 export TKWK=$(echo ~/wulin/wk)
 
-if [ -f '/opt/zfs/tkadm/cn.txt' ]; then
-   export PS1='[$(cat /opt/zfs/tkadm/cn.txt)]\u@\h:\w$ '
+if [ -f '/opt/taroko/tkadm/cn.txt' ]; then
+   export PS1='[$(cat /opt/taroko/tkadm/cn.txt)]\u@\h:\w$ '
 else
    export PS1='\u@\h:\w$ '
 fi

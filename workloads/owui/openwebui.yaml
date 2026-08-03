@@ -22,8 +22,8 @@ spec:
   volumes:
     - name: owui-storage
       hostPath:
-        path: /opt/zfs/owui
+        path: /opt/taroko/owui
     - name: ollama-storage
       hostPath:
-        path: /opt/zfs/ollama
+        path: /opt/taroko/ollama
   nodeName: tkllm-worker2

@@ -30,10 +30,10 @@ spec:
      volumes:
      - name: wulin
        hostPath:
-        path: /opt/wulin/
+        path: /opt/taroko/wulin/
      - name: zfs-storage
        hostPath:
-         path: /opt/zfs
+         path: /opt/taroko
      imagePullSecrets:
      - name: dkreg
      containers:
@@ -45,14 +45,14 @@ spec:
        args:
          - |
            service rpcbind start
-           source /opt/zfs/sys/usdt.bash
+           source /opt/taroko/sys/usdt.bash
            hdfs --daemon start nfs3
            tail -f /dev/null
        securityContext:
          privileged: true
        volumeMounts:
        - name: zfs-storage
-         mountPath: /opt/zfs
+         mountPath: /opt/taroko
        - name: wulin
          mountPath: /home/bigred/wulin
      nodeSelector:

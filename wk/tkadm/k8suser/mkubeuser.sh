@@ -4,8 +4,8 @@
 [ ! -d ${DIR_CSR} ] && mkdir -p ${DIR_CSR}
 
 export STU=${1}
-export DIR_CSR=/opt/zfs/k8suser/kuser
-export K8SUSER=/opt/zfs/k8suser
+export DIR_CSR=/opt/taroko/k8suser/kuser
+export K8SUSER=/opt/taroko/k8suser
 
 which envsubst &>/dev/null 
 [ $? = 1 ] && sudo apk update &>/dev/null && sudo apk add gettext &>/dev/null 

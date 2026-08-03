@@ -11,7 +11,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/opt/zfs/data01"
+    path: "/opt/taroko/data01"
 ---
 kind: PersistentVolume
 apiVersion: v1
@@ -26,4 +26,4 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/opt/zfs/data02"
+    path: "/opt/taroko/data02"
