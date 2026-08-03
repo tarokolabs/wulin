@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "[套件設定]"
 cp ~/wulin/wk/dip/conf/spark-3.5.4/* /opt/zfs/sys/spark-3.5.4-bin-hadoop3/conf/

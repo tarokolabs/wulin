@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 read -p "下載 DIP 套件 ? (YES/NO) " ans
 if [ "$ans" == "YES" ]; then

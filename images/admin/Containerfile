@@ -51,7 +51,7 @@ RUN apk update && apk upgrade && mkdir -p /lib/modules && mkdir -p /opt/www && \
     mkdir /home/bigred/wulin && chown bigred:wheel /home/bigred/wulin && \
 
     echo "export PATH=/home/bigred/.krew/bin:/home/bigred/wulin/bin:$PATH" >> /etc/profile && \
-    echo "[ -f /opt/zfs/tkadm/system.sh ] && source /opt/zfs/tkadm/system.sh" >> /etc/profile && \
+    echo "[ -f /opt/taroko/tkadm/system.sh ] && source /opt/taroko/tkadm/system.sh" >> /etc/profile && \
     echo 'bigred:100000:65535' > /etc/subuid && echo 'bigred:100000:65535' > /etc/subgid && \
     echo 'rbean:200000:65535' >> /etc/subuid && echo 'rbean:200000:65535' >> /etc/subgid && \
     echo 'gbean:300000:65535' >> /etc/subuid && echo 'gbean:300000:65535' >> /etc/subgid && \

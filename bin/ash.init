@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 for n in rbean gbean
 do
   adduser -s /bin/ash -h /opt/zfs/users/${n} -s /bin/ash -G wheel -D ${n}

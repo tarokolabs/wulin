@@ -8,7 +8,7 @@ spec:
   volumes:
   - name: sigpod
     hostPath:
-     path: /opt/zfs/sigpod
+     path: /opt/taroko/sigpod
   containers:
     - name: signal 
       image: quay.io/cloudwalker/signal-test

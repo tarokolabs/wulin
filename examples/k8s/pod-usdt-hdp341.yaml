@@ -10,9 +10,9 @@ spec:
     securityContext:
       privileged: true
     volumeMounts:
-      - mountPath: "/opt/zfs/sys"
+      - mountPath: "/opt/taroko/sys"
         name: usdt-hdp341-storage
   volumes:
     - name: usdt-hdp341-storage
       hostPath:
-        path: /opt/zfs/sys
+        path: /opt/taroko/sys

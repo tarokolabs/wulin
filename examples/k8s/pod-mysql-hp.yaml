@@ -15,4 +15,4 @@ spec:
   volumes:
     - name: mysql
       hostPath:
-        path: /opt/zfs/mysql
+        path: /opt/taroko/mysql

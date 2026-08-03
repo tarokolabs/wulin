@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 ctrlc_count=0
 
 function no_ctrlc()

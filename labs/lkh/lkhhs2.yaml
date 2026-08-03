@@ -51,13 +51,13 @@ spec:
      volumes:
      - name: wulin
        hostPath:
-        path: /opt/wulin/
+        path: /opt/taroko/wulin/
      - name: zfs-storage
        hostPath:
-         path: /opt/zfs
+         path: /opt/taroko
      - name: db
        hostPath:
-        path: /opt/zfs/db
+        path: /opt/taroko/db
      imagePullSecrets:
      - name: dkreg
      # runtimeClassName: crun
@@ -65,13 +65,13 @@ spec:
      - name: lkhhs2
        image: dkreg.taroko:5000/uslkh
        imagePullPolicy: IfNotPresent
-       command: ["/opt/zfs/sys/hs2/start.sh"]
+       command: ["/opt/taroko/sys/hs2/start.sh"]
        # tty: true
        securityContext:
          privileged: true
        volumeMounts:
        - name: zfs-storage
-         mountPath: /opt/zfs
+         mountPath: /opt/taroko
        - name: wulin
          mountPath: /home/bigred/wulin
        ports:
@@ -86,7 +86,7 @@ spec:
          privileged: true
        volumeMounts:
        - name: zfs-storage
-         mountPath: /opt/zfs
+         mountPath: /opt/taroko
        - name: db
          mountPath: /var/lib/mysql
        ports:

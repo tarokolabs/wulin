@@ -30,6 +30,6 @@ spec:
   volumes:
   - name: wordpress-pv
     hostPath:
-      path: /opt/zfs/wordpress
+      path: /opt/taroko/wordpress
   nodeSelector:
     app: taroko

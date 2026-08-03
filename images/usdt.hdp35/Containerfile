@@ -1,7 +1,7 @@
 FROM ubuntu:24.04
 
 COPY bash.append /tmp/
-RUN  mkdir -p /etc/skel/.ssh /opt/zfs/www /opt/zfs/dataset /opt/zfs/sys
+RUN  mkdir -p /etc/skel/.ssh /opt/taroko/www /opt/taroko/dataset /opt/taroko/sys
 COPY ssh/* /etc/skel/.ssh/
 COPY environment /etc/
 

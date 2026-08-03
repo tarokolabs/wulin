@@ -20,7 +20,7 @@ spec:
       volumes:
         - name: mail-data
           hostPath:
-            path: /opt/zfs/dkmail
+            path: /opt/taroko/dkmail
         - name: mail-config
           configMap:
             name: mail-config

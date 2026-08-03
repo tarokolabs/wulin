@@ -8,9 +8,9 @@ data:
     #!/bin/bash
     for n in rbean gbean ybean
     do
-      adduser -s /bin/ash -h /opt/zfs/users/${n} -s /bin/ash -G wheel -D ${n}
+      adduser -s /bin/ash -h /opt/taroko/users/${n} -s /bin/ash -G wheel -D ${n}
       echo -e "${n}\n${n}\n" | passwd ${n}
-      mkdir -p /opt/zfs/users/${n}/.kube && chown ${n}:root /opt/zfs/users/${n}/.kube
+      mkdir -p /opt/taroko/users/${n}/.kube && chown ${n}:root /opt/taroko/users/${n}/.kube
     done 
     wget https://github.com/hadolint/hadolint/releases/download/v2.14.0/hadolint-Linux-x86_64 -O /usr/bin/hadolint
     [ "$?" == "0" ] && sudo chmod +x /usr/bin/hadolint

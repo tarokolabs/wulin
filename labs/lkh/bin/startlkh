@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 source /opt/zfs/sys/uslkh.bash
 echo -e "[start Hadoop 3.4.1]"
 sleep 30

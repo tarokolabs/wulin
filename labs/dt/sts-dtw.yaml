@@ -40,7 +40,7 @@ spec:
       volumes:
         - name: dt-sys
           hostPath:
-            path: /opt/zfs/sys
+            path: /opt/taroko/sys
       runtimeClassName: crun
       containers:
         - image: quay.io/cloudwalker/usdt.hdp35
@@ -49,6 +49,6 @@ spec:
           tty: true
           volumeMounts:
            - name: dt-sys
-             mountPath: /opt/zfs/sys
+             mountPath: /opt/taroko/sys
            - name: dn
              mountPath: /home/bigred/dn

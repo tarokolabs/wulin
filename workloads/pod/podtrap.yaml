@@ -19,7 +19,7 @@ spec:
      volumes:
      - name: wulin
        hostPath:
-        path: /opt/wulin/
+        path: /opt/taroko/wulin/
      imagePullSecrets:
      - name: dkreg
      containers:

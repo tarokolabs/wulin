@@ -12,8 +12,8 @@ spec:
       operations: ["CREATE", "UPDATE"]
       resources: ["pods"]
   validations:
-  - expression: "!object.spec.volumes.exists(v, has(v.hostPath) && v.hostPath.path != '/opt/zfs')"
-    message: "Only /opt/zfs is permitted as hostPath"
+  - expression: "!object.spec.volumes.exists(v, has(v.hostPath) && v.hostPath.path != '/opt/taroko')"
+    message: "Only /opt/taroko is permitted as hostPath"
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingAdmissionPolicyBinding

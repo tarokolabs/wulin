@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 [ -f /tmp/jlog.stop ] && rm /tmp/jlog.stop
 echo "[`hostname`]" > /tmp/jps-`hostname`.log

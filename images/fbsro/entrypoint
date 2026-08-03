@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 filebrowser config init --port 4000 --address "" --baseurl "" --log "stdout" --root="/srv" --auth.method='noauth' --commands "" --lockPassword --perm.admin=false --perm.create=false --perm.delete=false --perm.execute=false --perm.modify=false --perm.rename=false --signup=false
 filebrowser users add anonymous "anonymous"
 filebrowser

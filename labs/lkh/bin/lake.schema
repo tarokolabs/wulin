@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 owner=bigred
 group=bigboss
 

@@ -18,5 +18,5 @@ spec:
   volumes:
     - name: goweb-hp
       hostPath:
-        path: /opt/zfs/goweb
+        path: /opt/taroko/goweb
   nodeName: tk8s-worker2

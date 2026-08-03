@@ -60,10 +60,10 @@ spec:
      volumes:
      - name: wulin
        hostPath:
-        path: /opt/wulin/
+        path: /opt/taroko/wulin/
      - name: zfs-storage
        hostPath:
-         path: /opt/zfs
+         path: /opt/taroko
      serviceAccountName: dtadm
      imagePullSecrets:
      - name: dkreg
@@ -77,7 +77,7 @@ spec:
          privileged: true
        volumeMounts:
        - name: zfs-storage
-         mountPath: /opt/zfs
+         mountPath: /opt/taroko
        - name: wulin
          mountPath: /home/bigred/wulin
        ports:

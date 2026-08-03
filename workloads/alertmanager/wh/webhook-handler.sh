@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # webhook-handler.sh
 
 # 1. 讀取 HTTP Request Line

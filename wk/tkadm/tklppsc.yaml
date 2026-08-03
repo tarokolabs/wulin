@@ -4,7 +4,7 @@ metadata:
   name: tk-local-path
 provisioner: rancher.io/local-path
 parameters:
-  nodePath: /opt/zfs/storage
+  nodePath: /opt/taroko/storage
   type: DirectoryOrCreate
 volumeBindingMode: WaitForFirstConsumer
 reclaimPolicy: Retain

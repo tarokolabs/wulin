@@ -71,7 +71,7 @@ spec:
       volumes:
         - name: hp-postgresql
           hostPath:
-            path: /opt/zfs/postgres
+            path: /opt/taroko/postgres
         - name: postgres-secret
           secret:
             secretName: postgres-secret

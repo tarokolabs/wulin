@@ -6,7 +6,7 @@ spec:
   volumes:
   - name: podstop
     hostPath:
-     path: /opt/zfs/podstop
+     path: /opt/taroko/podstop
   containers:
     - name: signal 
       image: quay.io/cloudwalker/alp.base

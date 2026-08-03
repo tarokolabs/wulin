@@ -221,5 +221,5 @@ spec:
         secret:
           secretName: jenkins-casc
       - hostPath:
-          path: /opt/zfs/jenkins
+          path: /opt/taroko/jenkins
         name: jenkins-storage

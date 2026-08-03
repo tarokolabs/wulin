@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 source /opt/zfs/sys/uslkh.bash
 
 kubectl scale --replicas=0 deployment/dep-lkhnfs -n lkh &>/dev/null

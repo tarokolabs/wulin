@@ -32,13 +32,13 @@ spec:
      volumes:
      - name: mt-storage
        hostPath:
-         path: /opt/zfs/
+         path: /opt/taroko/
      - name: podman-storage
        hostPath:
-         path: /opt/zfs/podman
+         path: /opt/taroko/podman
      - name: wulin-storage
        hostPath:
-         path: /opt/wulin
+         path: /opt/taroko/wulin
      - name: mt-init
        configMap:
          name: mt-init
@@ -62,14 +62,14 @@ spec:
                n=$(echo $HOST_IP | cut -d'.' -f3,4)
                hip=$(echo $n | tr '.' '_')
                hostname "mt_${hip}"
-               cp /opt/zfs/config /home/bigred/.kube/config
+               cp /opt/taroko/config /home/bigred/.kube/config
                chown -R bigred:wheel /home/bigred/.kube
                chmod 700 -R /home/bigred/.kube
        securityContext:
          privileged: true
        volumeMounts:
        - name: mt-storage
-         mountPath: /opt/zfs
+         mountPath: /opt/taroko
        - name: podman-storage
          mountPath: /var/lib/containers/storage
        - name: wulin-storage

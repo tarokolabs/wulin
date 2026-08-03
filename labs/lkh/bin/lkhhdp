@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 curl -X GET -s -u bigred:bigred http://dkreg.taroko:5000/v2/_catalog | jq ".repositories[]" | grep 'uslkh' &>/dev/null
 if [ "$?" != "0" ]; then

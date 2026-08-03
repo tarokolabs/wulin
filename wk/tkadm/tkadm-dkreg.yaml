@@ -87,16 +87,16 @@ spec:
      volumes:
      - name: dkreg-storage
        hostPath:
-         path: /opt/zfs/dkreg
+         path: /opt/taroko/dkreg
      - name: podman-storage
        hostPath:
-         path: /opt/zfs/podman
+         path: /opt/taroko/podman
      - name: wulin-storage
        hostPath:
-         path: /opt/wulin
+         path: /opt/taroko/wulin
      - name: zfs-storage
        hostPath:
-         path: /opt/zfs
+         path: /opt/taroko
      serviceAccountName: tkadm
      hostname: tkadm
      containers:
@@ -130,7 +130,7 @@ spec:
        - name: wulin-storage
          mountPath: /home/bigred/wulin
        - name: zfs-storage
-         mountPath: /opt/zfs
+         mountPath: /opt/taroko
        env:
        - name: KUBERNETES_SERVICE_HOST
          value: "kubernetes.default"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 export POD_NAMESPACE=default
 export KUBERNETES_SERVICE_PORT=443
 export KUBERNETES_SERVICE_HOST=kubernetes.default

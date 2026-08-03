@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 cred="jenkins:Jenkins12345"
 validateURL="http://devops.jenkins/pipeline-model-converter/validate"
 reponse=$(curl -s --user ${cred} -X POST -F "jenkinsfile=<Jenkinsfile" ${validateURL})

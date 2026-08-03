@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 imgname="quay.io/cloudwalker/mysql:8.0.41"
 
 if (podman rmi $imgname &>/dev/null); then

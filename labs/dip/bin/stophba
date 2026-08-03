@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 for n in dtw-0 dtw-1 dtw-2
 do
