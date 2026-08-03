@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: base-gvisor
+spec:
+  runtimeClassName: gvisor
+  containers:
+  - name: base
+    image: ghcr.io/tarokolabs/wulin/toolbox:v2026.8.0
+  nodeSelector:
+    kubernetes.io/hostname : c30-control-plane

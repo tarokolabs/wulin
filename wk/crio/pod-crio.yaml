@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-crio
+spec:
+  # CRI-O 路徑預設提供的 RuntimeClass（見 bin/runtimeclass-crio.yaml）
+  runtimeClassName: crun
+  containers:
+  - name: mybase
+    image: ghcr.io/tarokolabs/wulin/toolbox:v2026.8.0
+    imagePullPolicy: IfNotPresent
+    command: ["/bin/sleep", "infinity"]
