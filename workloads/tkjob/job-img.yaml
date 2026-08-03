@@ -9,7 +9,7 @@ spec:
     spec:
       containers:
       - name: job-img
-        image: quay.io/cloudwalker/alp.podman
+        image: ghcr.io/tarokolabs/wulin/podman:v2026.8.0
         command:
           - sh
           - "-c"
