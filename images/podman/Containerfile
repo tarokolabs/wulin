@@ -1,4 +1,5 @@
-FROM ghcr.io/tarokolabs/tk8s/toolbox:v2026.8.0
+ARG BASE_TAG=v2026.8.0
+FROM ghcr.io/tarokolabs/wulin/toolbox:${BASE_TAG}
 
 # containers.conf  - The container engine (podman, buildah) configuration file specifies
 # default configuration options and command-line flags for container engines.
