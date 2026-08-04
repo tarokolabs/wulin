@@ -24,7 +24,7 @@ RUN apk update && apk upgrade && mkdir -p /lib/modules && mkdir -p /opt/www && \
     skopeo buildah k9s openssl mariadb-connector-c apache2-utils && \
 
     # dkreg registry 認證檔：以 htpasswd 於建置時生成（bcrypt，cost 12）。
-    # dkreg manifest 從 /var/tmp/htpasswd 取用（見 wulin/wk/tkadm/tkadm-dkreg.yaml）
+    # dkreg manifest 從 /var/tmp/htpasswd 取用（見 wulin/platform/tkadm/tkadm-dkreg.yaml）
     htpasswd -Bbn -C 12 "${REG_USER}" "${REG_PASS}" > /var/tmp/htpasswd && \
 
     # git 身分：於建置時生成（原為排除在版控外的 .gitconfig）
