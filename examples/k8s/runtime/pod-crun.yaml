@@ -7,5 +7,3 @@ spec:
   containers:
   - name: nginx
     image: docker.io/library/nginx
-  nodeSelector:
-    kubernetes.io/hostname : c31-control-plane
