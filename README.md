@@ -13,7 +13,9 @@ Taroko 的教材、工作負載與技術文件。
 | `labs/` | 成套的課程專案 |
 | `examples/` | 單檔教學範例——K8s manifest、Python、Argo Workflows |
 | `images/` | 工作負載的容器建置 |
-| `legacy/` | 舊世代（VMware + Talos）內容的暫存區，見該目錄的 README |
+| `platform/` | 平台（tk8s）條件部署用的素材——管理主機（tkadm）的 manifest 與執行期腳本 |
+| `bin/` | 工具腳本——image 建置（`build-images.sh`）、第三方依賴取得（`fetch-deps.sh`） |
+| `legacy/` | 舊世代內容與課綱未再使用者的暫存區，見該目錄的 README |
 
 ## 與平台的關係
 
