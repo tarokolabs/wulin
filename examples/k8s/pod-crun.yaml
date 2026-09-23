@@ -6,6 +6,6 @@ spec:
   runtimeClassName: crun
   containers:
   - name: base
-    image: quay.io/cloudwalker/alp.base
+    image: ghcr.io/tarokolabs/wulin/toolbox:v2026.8.0
     securityContext:
       privileged: true

@@ -1,8 +1,8 @@
 # gVisor 沙箱容器示範。
-# 需要 containerd 叢集（tk8s 的 conf 設 K8SCRI=containerd）——
-# gVisor 官方僅支援 containerd，平台預設的 CRI-O 路徑不提供 gvisor
-# RuntimeClass。驗證方式：pod 內 `uname -r` 應顯示 gVisor 核心
-# （例如 4.19.0-gvisor）而非主機核心。
+# tk8s v2026.9.1 起 CRI-O 與 containerd 兩種 runtime 都提供 RuntimeClass gvisor。
+# 前提：叢集要以 veth datapath 建立——`CILIUM_DATAPATH=veth tkctl cluster create <名>`。
+# 預設的 netkit datapath 下 gVisor 沙箱起得來但完全沒有網路（tk8s#56 實測）。
+# 驗證方式：pod 內 `uname -r` 應顯示 gVisor 核心（例如 4.19.0-gvisor）而非主機核心。
 apiVersion: v1
 kind: Pod
 metadata:
@@ -11,6 +11,6 @@ spec:
   runtimeClassName: gvisor
   containers:
   - name: base
-    image: quay.io/cloudwalker/alp.base
+    image: ghcr.io/tarokolabs/wulin/toolbox:v2026.8.0
     securityContext:
       privileged: true
