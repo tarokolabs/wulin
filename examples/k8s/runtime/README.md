@@ -1,13 +1,13 @@
 # RuntimeClass 範例
 
-tk8s 建好的叢集已有兩個 RuntimeClass（由平台的 `manifests/runtimeclass.yaml` 建立），CRI-O 與 containerd 兩種 runtime 路徑一致：
+tk8s 建好的叢集有 RuntimeClass `crun`；以 `--gvisor` 建立的叢集多一個 `gvisor`（節點只有 CRI-O 一種）：
 
 | RuntimeClass | handler | 說明 |
 |---|---|---|
 | `crun` | `crun` | 一般容器，也是節點的預設 runtime |
 | `gvisor` | `runsc` | gVisor 沙箱，pod 內 `uname -r` 會看到 gVisor 核心 |
 
-**gVisor 需要叢集以 veth datapath 建立**：`CILIUM_DATAPATH=veth tkctl cluster create <名>`。平台預設（核心 ≥6.8）是 netkit，gVisor 沙箱在 netkit 下起得來但沒有網路（tk8s#56 實測）。
+**gVisor 要在建叢集時開**：`tkctl create cluster <名> --gvisor`，它會把 gVisor 裝進每個節點並自動選 veth datapath。平台預設（核心 ≥6.8）是 netkit，gVisor 沙箱在 netkit 下起得來但沒有網路（tk8s#56 實測）。
 
 | 檔案 | 用途 |
 |---|---|

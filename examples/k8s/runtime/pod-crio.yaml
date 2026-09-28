@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   name: pod-crio
 spec:
-  # 平台預設提供的 RuntimeClass（tk8s manifests/runtimeclass.yaml：crun、gvisor，CRI-O 與 containerd 皆有）
+  # 平台提供的 RuntimeClass：crun（CRI-O 內建）；gvisor 只在以 --gvisor 建立的叢集存在（tk8s v2）
   runtimeClassName: crun
   containers:
   - name: mybase

@@ -1,13 +1,13 @@
+# tk8s v2：以 type: LoadBalancer 曝露（LB-IPAM 配 IP），主機與有路由的機器直接可達；舊的 tkport 註解已移除。
 apiVersion: v1
 kind: Service
 metadata:
   name: lkhhs2
   namespace: lkh
-  annotations:
-    tkport: "tkgw:10000:10000"
   labels:
     app: lkhhs2
 spec:
+  type: LoadBalancer
   ports:
    - name: hs2
      port: 10000
