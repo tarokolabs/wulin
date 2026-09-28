@@ -22,8 +22,6 @@ kind: Service
 metadata:
   name: dipadm
   namespace: dip
-#  annotations:
-#    tkport: "tkgw:22102:22102"
 spec:
   selector:
     dep: dipadm

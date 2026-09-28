@@ -1,11 +1,11 @@
+# tk8s v2：以 type: LoadBalancer 曝露（LB-IPAM 配 IP），主機與有路由的機器直接可達；舊的 tkport 註解已移除。
 apiVersion: v1
 kind: Service
 metadata:
   name: dthba
   namespace: dt
-  annotations:
-    tkport: "tkgw:16010:16010"
 spec:
+  type: LoadBalancer
   selector:
     statefulset.kubernetes.io/pod-name: dtw-2
   ports:

@@ -22,8 +22,6 @@ kind: Service
 metadata:
   name: dtadm
   namespace: dt
-#  annotations:
-#    tkport: "tkgw:22101:22101"
 spec:
   selector:
     app: dtadm
