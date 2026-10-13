@@ -11,4 +11,4 @@ spec:
       ports:
         - containerPort: 8080
           hostPort: 9999
-  nodeName: tk8s-worker2
+  nodeName: tk8s-worker-2

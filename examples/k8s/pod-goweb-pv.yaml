@@ -19,4 +19,4 @@ spec:
     - name: goweb-hp
       hostPath:
         path: /opt/taroko/goweb
-  nodeName: tk8s-worker2
+  nodeName: tk8s-worker-2

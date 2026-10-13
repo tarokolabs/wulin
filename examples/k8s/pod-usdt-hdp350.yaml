@@ -5,7 +5,7 @@ metadata:
 spec:
   dnsPolicy: ClusterFirst
   runtimeClassName: crun
-  nodeName: tkdt-worker1
+  nodeName: tkdt-worker-1
   containers:
   - image: dkreg.taroko:5000/usdt.hdp350
     name: hdp350

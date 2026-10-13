@@ -6,7 +6,7 @@ metadata:
 spec:
 #  hostNetwork: true
 #  hostPID: true
-  nodeName: tkha-worker1
+  nodeName: tkha-worker-1
   containers:
   - name: sleep
     image: quay.io/cloudwalker/alpine

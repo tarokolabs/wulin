@@ -11,4 +11,4 @@ spec:
       ports:
         - containerPort: 8080
           hostPort: 9999
-  nodeName: tkdip-worker2
+  nodeName: tkdip-worker-2

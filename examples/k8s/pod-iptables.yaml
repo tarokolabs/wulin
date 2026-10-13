@@ -11,4 +11,4 @@ spec:
     command: ["/bin/sh"]
     securityContext:
       privileged: true
-  nodeName: c31-worker2
+  nodeName: c31-worker-2

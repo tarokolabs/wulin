@@ -26,4 +26,4 @@ spec:
     - name: ollama-storage
       hostPath:
         path: /opt/taroko/ollama
-  nodeName: tkllm-worker2
+  nodeName: tkllm-worker-2
