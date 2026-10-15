@@ -11,4 +11,4 @@ spec:
       ports:
         - containerPort: 8080
           hostPort: 9999
-  nodeName: tklkh-worker2
+  nodeName: tklkh-worker-2

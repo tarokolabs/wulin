@@ -10,4 +10,4 @@ spec:
     ports:
      - hostPort: 8080
        containerPort: 4000
-  nodeName: c31-worker2
+  nodeName: c31-worker-2

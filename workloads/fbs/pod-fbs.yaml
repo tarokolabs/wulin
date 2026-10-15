@@ -20,4 +20,4 @@ spec:
     persistentVolumeClaim:
       claimName: pvc-fbs
   nodeSelector:
-    kubernetes.io/hostname : c24-control-plane
+    kubernetes.io/hostname : c24-control-plane-1
